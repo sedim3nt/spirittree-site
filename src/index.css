@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --mint: #A8D5BA;
+  --turquoise: #5BC0BE;
+  --coral: #E88D72;
+  --lavender: #B8A9C9;
+  --lemon: #F4E285;
+  --sage: #87A878;
+  --cream: #FAF3E0;
+  --charcoal: #2D2D2D;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-mono { font-family: var(--font-mono); }
