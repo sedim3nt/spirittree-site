@@ -460,39 +460,7 @@ function Manifesto() {
    STAY CONNECTED
    ════════════════════════════════════════════ */
 function StayConnected() {
-  const links = [
-    { icon: 'twitter', href: 'https://x.com/sedim3nt', label: 'Follow on X' },
-    { icon: 'substack', href: 'https://sedim3nt.substack.com', label: 'Subscribe on Substack' },
-    { icon: 'github', href: 'https://github.com/sedim3nt', label: 'Star on GitHub' },
-    { icon: 'bluesky', href: 'https://bsky.app/profile/sedim3nt.bsky.social', label: 'Follow on Bluesky' },
-  ]
-  return (
-    <section style={{ background: 'var(--canvas)', padding: '100px 24px' }}>
-      <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
-        <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
-          <motion.h2 variants={fade} style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', fontWeight: 700, color: 'var(--ink)', marginBottom: 48 }}>
-            Stay Connected
-          </motion.h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 20 }}>
-            {links.map((l, i) => (
-              <motion.a key={i} variants={fade} href={l.href} target="_blank" rel="noopener noreferrer"
-                className="social-icon"
-                style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, padding: '28px 16px',
-                  background: '#fff', borderRadius: 12, textDecoration: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)' }}>
-                <span style={{ fontSize: 32 }}>{Icons[l.icon]}</span>
-                <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem', fontWeight: 600, color: 'var(--ink)' }}>{l.label}</span>
-              </motion.a>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
+  return null
 }
 
 /* ════════════════════════════════════════════
