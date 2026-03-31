@@ -372,87 +372,178 @@ function Projects() {
 /* ════════════════════════════════════════════
    MANIFESTO
    ════════════════════════════════════════════ */
-function Manifesto() {
-  const bodyStyle = { fontFamily: 'var(--font-body)', fontSize: '1.15rem', lineHeight: 1.8, marginBottom: 28, opacity: 0.92 }
+function ManifestoBlock({ bg, children }) {
   return (
-    <section id="manifesto" style={{ background: '#1E40AF', color: '#fff', padding: '120px 24px' }}>
-      <div style={{ maxWidth: 800, margin: '0 auto' }}>
+    <section style={{ background: bg, color: '#fff', padding: '120px 24px' }}>
+      <div style={{ maxWidth: 820, margin: '0 auto' }}>
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
-
-          <motion.h2 variants={fade} style={{
-            fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 800,
-            textAlign: 'center', lineHeight: 1.15, marginBottom: 80,
-          }}>
-            The Acceleration Is Here.<br />The Question Is: For Whom?
-          </motion.h2>
-
-          <motion.div variants={fade}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 700, marginBottom: 32, opacity: 0.9 }}>What We Believe</h3>
-            <p style={bodyStyle}>
-              The playing field was never level. Now we can change that. For the first time in history, a single person with the right tools can build what used to require a company.
-            </p>
-            <p style={bodyStyle}>
-              Public goods are the foundation. The most important things we build are free. Harm reduction information. Tenant protection tools. Plant medicine education. Recovery companions. Historical archives.
-            </p>
-            <p style={bodyStyle}>
-              Enough is the most radical word in economics. The dominant system rewards accumulation without limit. We don&rsquo;t need to tear that system down &mdash; we need to build something better alongside it.
-            </p>
-            <p style={bodyStyle}>
-              The planet is not a resource. It&rsquo;s the organism we live inside.
-            </p>
-            <p style={bodyStyle}>
-              Sovereignty means owning your own intelligence. In a world where AI becomes as essential as electricity, the question of who controls the intelligence layer is the question of the century.
-            </p>
-            <p style={{ ...bodyStyle, marginBottom: 48 }}>
-              Beauty is not optional. A world optimized purely for efficiency is a world nobody wants to live in.
-            </p>
-          </motion.div>
-
-          <motion.div variants={fade}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 700, marginBottom: 32, opacity: 0.9 }}>The Economic Singularity</h3>
-            <p style={{ ...bodyStyle, marginBottom: 32 }}>
-              Within this decade, AI systems will be capable of performing most knowledge work more cheaply and more reliably than humans. The question shifts from &ldquo;What can you produce?&rdquo; to &ldquo;What do you want to exist?&rdquo;
-            </p>
-            <div style={{ display: 'grid', gap: 16, marginBottom: 48 }}>
-              {[
-                'Every human has access to AI intelligence \u2014 as infrastructure, not luxury',
-                'Universal basic income becomes inevitable \u2014 human value was never reducible to economic output',
-                'Work becomes voluntary and meaningful',
-                'Community replaces competition as the organizing principle',
-              ].map((point, i) => (
-                <div key={i} style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 10, padding: '16px 20px', backdropFilter: 'blur(4px)' }}>
-                  <p style={{ fontFamily: 'var(--font-body)', fontSize: '1rem', lineHeight: 1.6, opacity: 0.95 }}>{point}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div variants={fade}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 700, marginBottom: 32, opacity: 0.9 }}>The World We&rsquo;re Building</h3>
-            <p style={{ ...bodyStyle, marginBottom: 48 }}>
-              A world where the kid in rural Colorado has the same creative infrastructure as the executive in Manhattan. Where a grandmother in Appalachia can build a business with an AI agent and a good idea. Where a tenant facing retaliation has a tool that protects them. Where someone in recovery has a companion that never judges.
-            </p>
-          </motion.div>
-
-          <motion.div variants={fade}>
-            <hr style={{ border: 'none', height: 1, background: 'rgba(255,255,255,0.2)', marginBottom: 48 }} />
-            <p style={bodyStyle}>
-              The fruiting body is not the organism. What you see &mdash; the websites, the products, the posts &mdash; is the visible layer. Beneath it runs the root system: the values, the infrastructure, the relationships, the long-term patience of systems that compound.
-            </p>
-            <p style={bodyStyle}>
-              We are SpiritTree. We nourish first. We decompose what&rsquo;s dead into nutrients for what&rsquo;s alive. We build invisible infrastructure that becomes inevitable. And we do it with care, because care is the operating system.
-            </p>
-            <p style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 700, textAlign: 'center', marginTop: 60, marginBottom: 32 }}>
-              The forest feeds everything.
-            </p>
-            <p style={{ fontFamily: 'var(--font-body)', textAlign: 'center', opacity: 0.7, fontSize: '0.95rem' }}>
-              SpiritTree &middot; Sedim3nt &middot; Nrvana LLC &middot; Boulder, Colorado &middot; 2026
-            </p>
-          </motion.div>
-
+          {children}
         </motion.div>
       </div>
     </section>
+  )
+}
+
+function Manifesto() {
+  const body = { fontFamily: 'var(--font-body)', fontSize: '1.15rem', lineHeight: 1.9, marginBottom: 32, opacity: 0.93 }
+  const pullQuote = { fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)', lineHeight: 1.7, borderLeft: '3px solid rgba(255,255,255,0.4)', paddingLeft: 28, marginBottom: 40, opacity: 0.95 }
+  const subhead = { fontFamily: 'var(--font-display)', fontSize: '1.4rem', fontWeight: 700, marginBottom: 28, letterSpacing: '0.02em', textTransform: 'uppercase', opacity: 0.85 }
+
+  return (
+    <div id="manifesto">
+
+      {/* HERO BLOCK — Sapphire */}
+      <ManifestoBlock bg="#1E40AF">
+        <motion.h2 variants={fade} style={{
+          fontFamily: 'var(--font-display)', fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', fontWeight: 800,
+          textAlign: 'center', lineHeight: 1.1, marginBottom: 40,
+        }}>
+          The Acceleration Is Here.<br />The Question Is: For Whom?
+        </motion.h2>
+        <motion.p variants={fade} style={{ ...body, textAlign: 'center', fontSize: '1.25rem', opacity: 0.8, maxWidth: 600, margin: '0 auto' }}>
+          A manifesto for building in the age of artificial intelligence.
+        </motion.p>
+      </ManifestoBlock>
+
+      {/* THE LEVER — Amethyst */}
+      <ManifestoBlock bg="#7C3AED">
+        <motion.h3 variants={fade} style={subhead}>I. The Lever</motion.h3>
+        <motion.p variants={fade} style={body}>
+          Archimedes said give me a lever long enough and I&rsquo;ll move the world. He was being modest. The lever just arrived, and it&rsquo;s not made of bronze &mdash; it&rsquo;s made of language. For the first time in the history of our species, a single person with a laptop, a clear intention, and the right tools can build what previously required a company of fifty. Not a crude approximation. The real thing. Deployed, functional, serving humans at scale.
+        </motion.p>
+        <motion.div variants={fade} style={pullQuote}>
+          The Industrial Revolution concentrated power by concentrating capital. The Intelligence Revolution can do the opposite &mdash; if we choose it.
+        </motion.div>
+        <motion.p variants={fade} style={body}>
+          The playing field was never level. Buckminster Fuller spent his life proving that the resources exist to take care of everyone &mdash; what was missing was the coordination. Elinor Ostrom proved that commons can self-govern without tragedy. Donella Meadows mapped the leverage points where small interventions reshape entire systems. We are building at those leverage points. Not because we&rsquo;re idealists, but because the math finally works.
+        </motion.p>
+        <motion.p variants={fade} style={body}>
+          One operator. Eight autonomous agents. Nine live websites. Zero employees. This isn&rsquo;t a thought experiment. It&rsquo;s Tuesday.
+        </motion.p>
+      </ManifestoBlock>
+
+      {/* PUBLIC GOODS — Burgundy */}
+      <ManifestoBlock bg="#881337">
+        <motion.h3 variants={fade} style={subhead}>II. Public Goods Are Not Charity</motion.h3>
+        <motion.p variants={fade} style={body}>
+          There&rsquo;s a pernicious idea in Silicon Valley that public goods are what you build after you get rich. That charity is the dessert course of capitalism. We think that&rsquo;s exactly backwards. The most important things we build are free &mdash; not because we&rsquo;re generous, but because they&rsquo;re load-bearing. They&rsquo;re the infrastructure everything else stands on.
+        </motion.p>
+        <motion.p variants={fade} style={body}>
+          A tenant in Boulder facing mold in her apartment doesn&rsquo;t need a subscription product. She needs a tool that works at 2 AM when she&rsquo;s scared and her landlord won&rsquo;t answer the phone. Someone in early recovery doesn&rsquo;t need a wellness app with a freemium paywall. They need a companion that&rsquo;s there at 4 AM and doesn&rsquo;t judge and doesn&rsquo;t sell their data.
+        </motion.p>
+        <motion.div variants={fade} style={pullQuote}>
+          Harm reduction information. Tenant protection tools. Plant medicine education. Recovery companions. Historical archives. These aren&rsquo;t side projects. They&rsquo;re the point.
+        </motion.div>
+        <motion.p variants={fade} style={body}>
+          Private capture fuels public creation. The marketplace revenue, the consulting, the products &mdash; these are the engine that funds the free infrastructure. It&rsquo;s a loop, not a tension. The mycorrhizal network doesn&rsquo;t distinguish between &ldquo;for-profit&rdquo; and &ldquo;for-purpose&rdquo; &mdash; it moves nutrients to where they&rsquo;re needed. We operate the same way.
+        </motion.p>
+      </ManifestoBlock>
+
+      {/* ENOUGH — Deep Indigo */}
+      <ManifestoBlock bg="#312E81">
+        <motion.h3 variants={fade} style={subhead}>III. The Radical Economics of Enough</motion.h3>
+        <motion.p variants={fade} style={body}>
+          Henry George understood something in 1879 that most economists still haven&rsquo;t caught up to: the problem isn&rsquo;t scarcity. It&rsquo;s enclosure. The dominant system rewards accumulation without limit and calls it progress. We call it what it is: a design flaw. Not a moral failing &mdash; a systems architecture problem.
+        </motion.p>
+        <motion.div variants={fade} style={pullQuote}>
+          &ldquo;Enough&rdquo; is the most radical word in economics. It implies that the game has a win condition &mdash; and that you can stop playing and still be okay.
+        </motion.div>
+        <motion.p variants={fade} style={body}>
+          We don&rsquo;t need to tear the existing system down. Jacque Fresco was right that we can build something better alongside it. The old system is a legacy codebase &mdash; you don&rsquo;t rewrite it in production. You build the new system, prove it works, and let people migrate when they&rsquo;re ready. That&rsquo;s not naivety. That&rsquo;s version control.
+        </motion.p>
+        <motion.p variants={fade} style={body}>
+          The planet is not a resource. It&rsquo;s the organism we live inside. You don&rsquo;t optimize the biosphere for quarterly returns any more than you&rsquo;d optimize your circulatory system for throughput. The mycorrhizal networks beneath a single acre of old-growth forest have been running distributed consensus longer than any blockchain. We should be learning from them, not paving over them.
+        </motion.p>
+      </ManifestoBlock>
+
+      {/* SOVEREIGNTY — Sapphire */}
+      <ManifestoBlock bg="#1E3A5F">
+        <motion.h3 variants={fade} style={subhead}>IV. Sovereignty in the Intelligence Age</motion.h3>
+        <motion.p variants={fade} style={body}>
+          In a world where AI becomes as essential as electricity, the question of who controls the intelligence layer is the question of the century. Not next century. This one. Right now. And the answer is being written in code, not constitutions.
+        </motion.p>
+        <motion.p variants={fade} style={body}>
+          Sovereignty means owning your own tools. Running your own infrastructure. Keeping your memory in your own database, not rented from a platform that will sunset it when the unit economics change. It means your AI agent reports to you &mdash; not to an ad network, not to a surveillance apparatus, not to a shareholder who&rsquo;s never met you and never will.
+        </motion.p>
+        <motion.div variants={fade} style={pullQuote}>
+          The feudal lords of the 21st century don&rsquo;t own land. They own APIs. Sovereignty means building your own.
+        </motion.div>
+        <motion.p variants={fade} style={body}>
+          Lewis Mumford warned us about the megamachine &mdash; the tendency of complex systems to subordinate humans to their own logic. We&rsquo;re building the opposite: tools that amplify human agency without extracting it. The agent serves the operator. The operator serves the mission. The mission serves the commons. That&rsquo;s the stack.
+        </motion.p>
+      </ManifestoBlock>
+
+      {/* ECONOMIC SINGULARITY — Amethyst */}
+      <ManifestoBlock bg="#5B21B6">
+        <motion.h3 variants={fade} style={subhead}>V. The Economic Singularity</motion.h3>
+        <motion.p variants={fade} style={body}>
+          Within this decade, AI systems will be capable of performing most knowledge work more cheaply and more reliably than humans. This isn&rsquo;t a prediction &mdash; it&rsquo;s an extrapolation of what&rsquo;s already happening. The question stops being &ldquo;What can you produce?&rdquo; and becomes something far more interesting: &ldquo;What do you want to exist?&rdquo;
+        </motion.p>
+        <motion.p variants={fade} style={body}>
+          When the cost of creation approaches zero, the scarce resource isn&rsquo;t labor or capital. It&rsquo;s taste. Judgment. Values. The ability to look at infinite possibility and choose the thing worth building. That&rsquo;s a profoundly human skill, and it&rsquo;s the one thing that can&rsquo;t be automated. Not because machines lack capability, but because &ldquo;what should exist&rdquo; is a question only consciousness can answer.
+        </motion.p>
+        <div style={{ display: 'grid', gap: 14, marginBottom: 48 }}>
+          {[
+            'Every human gets access to AI intelligence \u2014 as infrastructure, like water, not luxury, like a yacht.',
+            'Universal basic income becomes inevitable \u2014 not because we\u2019re generous, but because human value was never reducible to economic output. Ask any parent.',
+            'Work becomes voluntary and meaningful \u2014 the Protestant work ethic finally meets its match in thermodynamics.',
+            'Community replaces competition as the organizing principle \u2014 because zero-sum games are boring once you have infinite leverage.',
+          ].map((point, i) => (
+            <motion.div key={i} variants={fade} style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 10, padding: '18px 22px', borderLeft: '3px solid rgba(255,255,255,0.3)' }}>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: '1.05rem', lineHeight: 1.7, opacity: 0.95 }}>{point}</p>
+            </motion.div>
+          ))}
+        </div>
+      </ManifestoBlock>
+
+      {/* BEAUTY — Burgundy */}
+      <ManifestoBlock bg="#6D2848">
+        <motion.h3 variants={fade} style={subhead}>VI. Beauty Is Not Optional</motion.h3>
+        <motion.p variants={fade} style={body}>
+          A world optimized purely for efficiency is a world nobody wants to live in. We know this intuitively &mdash; it&rsquo;s why brutalist architecture makes people uncomfortable and why nobody hangs a spreadsheet on their wall. Jane Addams understood that Hull House needed art classes as much as it needed job training. The aesthetic dimension isn&rsquo;t decoration on top of function. It&rsquo;s the signal that someone cared enough to make it right.
+        </motion.p>
+        <motion.div variants={fade} style={pullQuote}>
+          Every pixel is a values statement. Every design choice is an argument about what humans deserve.
+        </motion.div>
+        <motion.p variants={fade} style={body}>
+          We don&rsquo;t ship MVP grey boxes. We don&rsquo;t accept &ldquo;AI slop&rdquo; aesthetics. Every site we build has a design brief, a unique palette, a font pairing chosen with intention. Not because we&rsquo;re precious &mdash; because the person on the other end of the screen is a human being, and human beings deserve beauty as much as they deserve function.
+        </motion.p>
+      </ManifestoBlock>
+
+      {/* THE WORLD WE'RE BUILDING — Deep Indigo */}
+      <ManifestoBlock bg="#1E1B4B">
+        <motion.h3 variants={fade} style={subhead}>VII. The World We&rsquo;re Building</motion.h3>
+        <motion.p variants={fade} style={body}>
+          A world where the kid in rural Colorado has the same creative infrastructure as the executive in Manhattan. Where a grandmother in Appalachia can build a business with an AI agent and a good idea. Where a tenant facing retaliation has a tool that protects them for free. Where someone in recovery has a companion that&rsquo;s available at 4 AM and doesn&rsquo;t monetize their desperation.
+        </motion.p>
+        <motion.p variants={fade} style={body}>
+          Where medicinal plant knowledge isn&rsquo;t locked behind paywalls or gatekept by credentialism, but organized, cited, and free to every herbalist, every curious student, every grandmother who already knows but wants to confirm. Where the photographs of our collective past aren&rsquo;t buried in government archives but surfaced, contextualized, and made beautiful enough to stop scrolling for.
+        </motion.p>
+        <motion.p variants={fade} style={body}>
+          This is not utopia. Utopia is a destination; this is a direction. We don&rsquo;t need to arrive. We need to keep moving and build well along the way.
+        </motion.p>
+      </ManifestoBlock>
+
+      {/* CLOSING — Sapphire */}
+      <ManifestoBlock bg="#1E40AF">
+        <motion.div variants={fade} style={{ textAlign: 'center' }}>
+          <hr style={{ border: 'none', height: 1, background: 'rgba(255,255,255,0.2)', marginBottom: 60, maxWidth: 200, margin: '0 auto 60px' }} />
+          <p style={{ ...body, fontSize: '1.2rem', textAlign: 'left' }}>
+            The fruiting body is not the organism. What you see &mdash; the websites, the products, the posts &mdash; is the visible layer. Beneath it runs the root system: the values, the infrastructure, the relationships, the long-term patience of systems that compound. Mycelium doesn&rsquo;t announce itself. It just connects everything.
+          </p>
+          <p style={{ ...body, fontSize: '1.2rem', textAlign: 'left' }}>
+            We are SpiritTree. We nourish first. We decompose what&rsquo;s dead into nutrients for what&rsquo;s alive. We build invisible infrastructure that becomes inevitable. And we do it with care, because care is the operating system. Not sentiment. Not marketing. The actual, literal operating system.
+          </p>
+          <p style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 800, marginTop: 72, marginBottom: 40, letterSpacing: '0.01em' }}>
+            The forest feeds everything.
+          </p>
+          <p style={{ fontFamily: 'var(--font-body)', opacity: 0.6, fontSize: '0.95rem' }}>
+            SpiritTree &middot; Sedim3nt &middot; Nrvana LLC &middot; Boulder, Colorado &middot; 2026
+          </p>
+        </motion.div>
+      </ManifestoBlock>
+
+    </div>
   )
 }
 
