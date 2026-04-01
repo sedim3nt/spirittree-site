@@ -55,6 +55,9 @@ const PROJECTS = [
   { name: 'Agent Vitals', desc: 'Fleet monitoring. 8 agents, real-time telemetry.', url: 'https://vitals.spirittree.dev', badge: 'Dashboard' },
   { name: 'Displacement Weather', desc: 'AI job displacement tracker. Industry forecasts.', url: 'https://displacement.spirittree.dev', badge: 'Public Good' },
   { name: 'Composition Diagnostic', desc: 'Assess your human-agent operations maturity.', url: 'https://diagnostic.spirittree.dev', badge: 'Tool' },
+  { name: 'Spore', desc: 'Open source agent configuration library. 190 files. MIT licensed. Free forever.', url: 'https://github.com/sedim3nt/spore', badge: 'Open Source' },
+  { name: 'Proof of Care', desc: 'On-chain attestations for care work. Non-financialized reputation on Base.', url: 'https://proofofcare.spirittree.dev', badge: 'Protocol' },
+  { name: 'Agent Wallet', desc: 'Smart wallets for AI agents. Spending rules, identity, fleet management.', url: 'https://agentwallet.spirittree.dev', badge: 'Infrastructure' },
   { name: 'Dashboards', desc: 'AI economy intelligence.', url: 'https://dashboards.spirittree.dev', badge: 'Data' },
   { name: 'Substack', desc: 'Weekly signal.', url: 'https://sedim3nt.substack.com', badge: 'Newsletter' },
 ]
@@ -297,7 +300,7 @@ function Projects() {
             What We&rsquo;ve Built
           </motion.h2>
           <motion.p variants={fade} style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', marginBottom: 48, fontSize: '1.1rem' }}>
-            13 live sites. Built by agents. Most of them free.
+            16 live sites. Built by agents. Most of them free.
           </motion.p>
 
           <div style={{
