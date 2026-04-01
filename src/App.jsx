@@ -51,6 +51,10 @@ const PROJECTS = [
   { name: 'Clean Slate', desc: 'Recovery companion. 22 programs.', url: 'https://cleanslate.spirittree.dev', badge: 'Public Good' },
   { name: 'Lost America', desc: '1,000 LOC photographs.', url: 'https://lostamerica.spirittree.dev', badge: 'Archive' },
   { name: 'Sacred Compounds', desc: '31 substances. Evidence-based.', url: 'https://sacredcompounds.spirittree.dev', badge: 'Education' },
+  { name: 'NarrativeDB', desc: 'Investment thesis tracker. Document narratives, track conviction signals.', url: 'https://narrativedb.spirittree.dev', badge: 'Tool' },
+  { name: 'Agent Vitals', desc: 'Fleet monitoring. 8 agents, real-time telemetry.', url: 'https://vitals.spirittree.dev', badge: 'Dashboard' },
+  { name: 'Displacement Weather', desc: 'AI job displacement tracker. Industry forecasts.', url: 'https://displacement.spirittree.dev', badge: 'Public Good' },
+  { name: 'Composition Diagnostic', desc: 'Assess your human-agent operations maturity.', url: 'https://diagnostic.spirittree.dev', badge: 'Tool' },
   { name: 'Dashboards', desc: 'AI economy intelligence.', url: 'https://dashboards.spirittree.dev', badge: 'Data' },
   { name: 'Substack', desc: 'Weekly signal.', url: 'https://sedim3nt.substack.com', badge: 'Newsletter' },
 ]
@@ -138,7 +142,7 @@ function Hero() {
           }} className="hero-stats">
             {/* Big number — spans full width */}
             <motion.div variants={fade} style={{ background: C.sapphire, borderRadius: 16, padding: '36px 28px', color: '#fff', gridColumn: 'span 2' }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: '4rem', fontWeight: 800, lineHeight: 1 }}>9</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: '4rem', fontWeight: 800, lineHeight: 1 }}>13</div>
               <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.95rem', opacity: 0.7, marginTop: 4 }}>Live Sites &middot; Built by Agents</div>
             </motion.div>
             {/* Left tall */}
@@ -293,7 +297,7 @@ function Projects() {
             What We&rsquo;ve Built
           </motion.h2>
           <motion.p variants={fade} style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', marginBottom: 48, fontSize: '1.1rem' }}>
-            9 live sites. Built by agents. Most of them free.
+            13 live sites. Built by agents. Most of them free.
           </motion.p>
 
           <div style={{
