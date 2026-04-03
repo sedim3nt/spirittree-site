@@ -633,24 +633,22 @@ export default function Specs() {
                 SpiritTree · Sedim3nt · Nrvana LLC · Boulder, Colorado
               </p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: 24, flexWrap: 'wrap' }}>
-                <a href="https://github.com/sedim3nt/spore" target="_blank" rel="noopener noreferrer" style={{
-                  fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600,
-                  color: C.sapphire, textDecoration: 'none',
-                }}>
-                  Spore (GitHub) →
-                </a>
-                <a href="https://agentorchard.dev" target="_blank" rel="noopener noreferrer" style={{
-                  fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600,
-                  color: C.amethyst, textDecoration: 'none',
-                }}>
-                  AgentOrchard →
-                </a>
-                <a href="https://sedim3nt.substack.com" target="_blank" rel="noopener noreferrer" style={{
-                  fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600,
-                  color: C.burgundy, textDecoration: 'none',
-                }}>
-                  Substack →
-                </a>
+                {[
+                  { label: 'GitHub', url: 'https://github.com/sedim3nt', color: C.sapphire },
+                  { label: 'Spore (Open Source)', url: 'https://github.com/sedim3nt/spore', color: C.sapphire },
+                  { label: 'AgentOrchard', url: 'https://agentorchard.dev', color: C.amethyst },
+                  { label: 'X / Twitter', url: 'https://x.com/sedim3nt', color: '#1DA1F2' },
+                  { label: 'Substack', url: 'https://sedim3nt.substack.com', color: C.burgundy },
+                  { label: 'Bluesky', url: 'https://bsky.app/profile/sedim3nt.bsky.social', color: '#0085FF' },
+                  { label: 'Telegram', url: 'https://t.me/sedim3ntBot', color: '#26A5E4' },
+                ].map((link, i) => (
+                  <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" style={{
+                    fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600,
+                    color: link.color, textDecoration: 'none',
+                  }}>
+                    {link.label} →
+                  </a>
+                ))}
               </div>
             </motion.div>
           </motion.div>
