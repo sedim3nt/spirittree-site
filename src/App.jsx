@@ -44,22 +44,25 @@ const AGENTS = [
 ]
 
 const PROJECTS = [
-  { name: 'Agent Orchard', desc: '51 plug-and-play AI agent products.', url: 'https://agentorchard.dev', badge: 'Marketplace' },
-  { name: 'SafeSpace', desc: 'Tenant protection for 11 cities.', url: 'https://safespace.spirittree.dev', badge: 'Public Good' },
-  { name: 'MycoMaps', desc: '100+ mushroom retailers mapped.', url: 'https://mycomaps.spirittree.dev', badge: 'Directory' },
-  { name: 'Rootwork', desc: '100 medicinal plants. Free forever.', url: 'https://rootwork.spirittree.dev', badge: 'Public Good' },
-  { name: 'Clean Slate', desc: 'Recovery companion. 22 programs.', url: 'https://cleanslate.spirittree.dev', badge: 'Public Good' },
-  { name: 'Lost America', desc: '1,000 LOC photographs.', url: 'https://lostamerica.spirittree.dev', badge: 'Archive' },
-  { name: 'Sacred Compounds', desc: '31 substances. Evidence-based.', url: 'https://sacredcompounds.spirittree.dev', badge: 'Education' },
-  { name: 'NarrativeDB', desc: 'Investment thesis tracker. Document narratives, track conviction signals.', url: 'https://narrativedb.spirittree.dev', badge: 'Tool' },
-  { name: 'Agent Vitals', desc: 'Fleet monitoring. 8 agents, real-time telemetry.', url: 'https://vitals.spirittree.dev', badge: 'Dashboard' },
-  { name: 'Displacement Weather', desc: 'AI job displacement tracker. Industry forecasts.', url: 'https://displacement.spirittree.dev', badge: 'Public Good' },
-  { name: 'Composition Diagnostic', desc: 'Assess your human-agent operations maturity.', url: 'https://diagnostic.spirittree.dev', badge: 'Tool' },
-  { name: 'Spore', desc: 'Open source agent configuration library. 190 files. MIT licensed. Free forever.', url: 'https://github.com/sedim3nt/spore', badge: 'Open Source' },
-  { name: 'Proof of Care', desc: 'On-chain attestations for care work. Non-financialized reputation on Base.', url: 'https://proofofcare.spirittree.dev', badge: 'Protocol' },
-  { name: 'Agent Wallet', desc: 'Smart wallets for AI agents. Spending rules, identity, fleet management.', url: 'https://agentwallet.spirittree.dev', badge: 'Infrastructure' },
-  { name: 'Dashboards', desc: 'AI economy intelligence.', url: 'https://dashboards.spirittree.dev', badge: 'Data' },
-  { name: 'Substack', desc: 'Weekly signal.', url: 'https://sedim3nt.substack.com', badge: 'Newsletter' },
+  { name: 'Agent Orchard', desc: '56 plug-and-play AI agent products. Open source via Spore.', url: 'https://agentorchard.dev', badge: 'Marketplace' },
+  { name: 'SafeSpace', desc: 'Tenant protection for 11 cities. Report violations, track landlords.', url: 'https://safespace.spirittree.dev', badge: 'Public Good' },
+  { name: 'MycoMaps', desc: '100+ mushroom retailers mapped. AI Mycologist assistant.', url: 'https://mycomaps.spirittree.dev', badge: 'Directory' },
+  { name: 'Rootwork', desc: '164 medicinal plants. Garden Oracle AI herbalist. Free forever.', url: 'https://rootwork.spirittree.dev', badge: 'Public Good' },
+  { name: 'Clean Slate', desc: 'Recovery companion. AI Companion with consent-first privacy.', url: 'https://cleanslate.spirittree.dev', badge: 'Public Good' },
+  { name: 'Lost America', desc: '1,000 LOC photographs. Ghost Narrator speaks as the places.', url: 'https://lostamerica.spirittree.dev', badge: 'Archive' },
+  { name: 'Sacred Compounds', desc: '31 substances. AI Pharmacologist for harm reduction.', url: 'https://sacredcompounds.spirittree.dev', badge: 'Education' },
+  { name: 'Safety Net', desc: '36 tools for AI displacement. Rep lookup, letter composers, calculators.', url: 'https://safetynet.spirittree.dev', badge: 'Public Good' },
+  { name: 'NarrativeDB', desc: 'Investment thesis tracker. AI Pattern Finder analyzes narratives.', url: 'https://narrativedb.spirittree.dev', badge: 'Tool' },
+  { name: 'Agent Vitals', desc: 'Fleet monitoring. 8 agents, real-time gateway telemetry.', url: 'https://vitals.spirittree.dev', badge: 'Dashboard' },
+  { name: 'Displacement Weather', desc: 'AI job displacement forecaster. Personal career weather reports.', url: 'https://displacement.spirittree.dev', badge: 'Public Good' },
+  { name: 'Displacement Index', desc: '56 occupations scored. AI Career Geographer for transitions.', url: 'https://displacementindex.spirittree.dev', badge: 'Public Good' },
+  { name: 'CMPRSSN Diagnostic', desc: 'Assess your human-agent operations maturity. AI Compression Analyst.', url: 'https://diagnostic.spirittree.dev', badge: 'Tool' },
+  { name: 'Enough Gauge', desc: 'Sufficiency widget. AI Philosopher reflects on enough.', url: 'https://enough.spirittree.dev', badge: 'Tool' },
+  { name: 'Spore', desc: 'Open source agent config library. 190 files. MIT licensed. Free forever.', url: 'https://github.com/sedim3nt/spore', badge: 'Open Source' },
+  { name: 'Proof of Care', desc: 'On-chain attestations for care work. AI Witness on Base.', url: 'https://proofofcare.spirittree.dev', badge: 'Protocol' },
+  { name: 'Agent Wallet', desc: 'Smart wallets for AI agents. Spending rules, fleet management.', url: 'https://agentwallet.spirittree.dev', badge: 'Infrastructure' },
+  { name: 'Dashboards', desc: 'AI economy intelligence. 10 tabs of data.', url: 'https://dashboards.spirittree.dev', badge: 'Data' },
+  { name: 'Substack', desc: 'Daily signal. AI analysis and displacement coverage.', url: 'https://sedim3nt.substack.com', badge: 'Newsletter' },
 ]
 
 const W = { maxWidth: 1280, margin: '0 auto', padding: '0 32px' }
@@ -125,7 +128,7 @@ function Hero() {
               SpiritTree
             </motion.h1>
             <motion.p variants={fade} style={{ fontFamily: 'var(--font-body)', fontSize: '1.2rem', color: 'var(--stone)', lineHeight: 1.7, maxWidth: 480, marginBottom: 40 }}>
-              Rooted in care, mutual aid, and long-term systems thinking. One operator. Eight agents. Nine live sites. Zero employees.
+              Rooted in care, mutual aid, and long-term systems thinking. One operator. Eight agents. Nineteen live sites. Zero employees.
             </motion.p>
             <motion.div variants={fade} className="flex gap-4 flex-wrap" style={{ marginBottom: 32 }}>
               <a href="#manifesto" className="btn-primary">Read the Manifesto</a>
@@ -145,7 +148,7 @@ function Hero() {
           }} className="hero-stats">
             {/* Big number — spans full width */}
             <motion.div variants={fade} style={{ background: C.sapphire, borderRadius: 16, padding: '36px 28px', color: '#fff', gridColumn: 'span 2' }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: '4rem', fontWeight: 800, lineHeight: 1 }}>13</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: '4rem', fontWeight: 800, lineHeight: 1 }}>19</div>
               <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.95rem', opacity: 0.7, marginTop: 4 }}>Live Sites &middot; Built by Agents</div>
             </motion.div>
             {/* Left tall */}
@@ -300,7 +303,7 @@ function Projects() {
             What We&rsquo;ve Built
           </motion.h2>
           <motion.p variants={fade} style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', marginBottom: 48, fontSize: '1.1rem' }}>
-            16 live sites. Built by agents. Most of them free.
+            19 live sites. Built by agents. Most of them free. 13 with integrated AI.
           </motion.p>
 
           <div style={{

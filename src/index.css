@@ -185,6 +185,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive */
 @media (max-width: 900px) {
+  .numbers-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .kanban-grid { columns: 1 !important; }
   .hero-grid { grid-template-columns: 1fr !important; }
   .hero-stats { grid-template-columns: 1fr 1fr !important; }
   .values-grid { grid-template-columns: 1fr !important; }
