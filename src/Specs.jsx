@@ -170,6 +170,73 @@ const NUMBERS = {
   ]
 }
 
+const ROADBLOCKS = {
+  title: 'Roadblocks & Hard-Won Lessons',
+  color: '#7C2D12',
+  items: [
+    {
+      heading: 'Phantom Success',
+      status: 'solved',
+      problem: 'APIs report "success" while silently dropping the payload. n8n workflows showed green checkmarks while zero posts actually landed. We lost days of content before catching it.',
+      solution: 'Never trust the API response alone. Every posting pipeline now verifies the post exists on the platform after submission. We track lastVerifiedPost timestamps per platform and alert if success + no verified post for 24h.',
+    },
+    {
+      heading: 'Context Window Costs',
+      status: 'solved',
+      problem: 'Early runs burned through token budgets loading entire project histories into every session. Context file bloat was the #1 cost driver — sessions loaded 50KB+ before doing any actual work.',
+      solution: 'Flat-rate CLI subscriptions only (Claude Code, Gemini CLI). LCM (Lossless Context Management) compresses conversation history into a DAG of summaries. Strict pre-fetch discipline: only load what the task needs. Result: went from $100+/day to effectively $0 per-token.',
+    },
+    {
+      heading: 'Cookie-Based API Auth',
+      status: 'active',
+      problem: 'Substack has no official API. Publishing requires a session cookie (SID) that expires unpredictably and cannot be refreshed programmatically. Every expiration requires a human to open a browser, log in, and copy a cookie value.',
+      solution: 'Partial: publish-substack.py works when the SID is valid. Investigating browser automation (Peekaboo) for fully autonomous publishing. Broader lesson: any platform without a real API is a fragile dependency.',
+    },
+    {
+      heading: 'Bot Detection & Account Suspensions',
+      status: 'solved',
+      problem: 'Google suspended our Gmail account twice for "bot activity" caused by aggressive API retry loops. Excessive retries on failing endpoints triggered automated security lockouts.',
+      solution: 'Hard policy: max 3 retry attempts on any external API call, then stop completely. Log the failure, report in next morning briefing, wait for human confirmation before retrying. Zero suspensions since implementing this.',
+    },
+    {
+      heading: 'Agent Memory Continuity',
+      status: 'solved',
+      problem: 'Every session starts fresh — agents have no built-in memory between conversations. Early sessions repeated work, forgot decisions, and contradicted prior commitments.',
+      solution: 'Three-layer memory architecture: MEMORY.md (policy bible, always loaded), daily logs (memory/YYYY-MM-DD.md), and LCM summaries (SQLite DAG of compressed conversation history). autoDream cron consolidates daily. Agents now maintain continuity across hundreds of sessions.',
+    },
+    {
+      heading: 'Sub-Agent Reliability',
+      status: 'mitigated',
+      problem: 'Sub-agents spawned for complex tasks sometimes hang, timeout, or produce phantom completions (claiming success without writing files). Sequential xurl/CLI workflows are especially fragile in sub-agent contexts.',
+      solution: 'Scripts over sub-agents for mechanical work. Sub-agents reserved for creative/analytical tasks. Stub-write pattern: create the output file first with a STUB marker, then fill it — guarantees we detect failures. Timeout bumped to 600s for heavy tasks.',
+    },
+    {
+      heading: 'Platform API Fragmentation',
+      status: 'active',
+      problem: 'X/Twitter v1.1 media upload is incompatible with v2 posting endpoint. Meta requires page admin roles that aren\'t obvious. Instagram rejects certain CDN URLs. Every platform has undocumented quirks that only surface in production.',
+      solution: 'Partial: OG card workaround for X images, jsDelivr CDN rewriting for Instagram. Broader approach: document every platform quirk in FAILURE_MODEL.md and build platform-specific posting scripts rather than generic wrappers.',
+    },
+    {
+      heading: 'Gateway Memory Pressure',
+      status: 'mitigated',
+      problem: 'OpenClaw gateway memory climbs during sub-agent storms. Hit 1956MB against a ~2048MB cap. Stale sessions accumulate — 94 sessions at one point, most dead.',
+      solution: 'Periodic session pruning (94 → 44 in one pass). Gateway restart after cleanup drops memory 60-70%. Monitoring via Agent Vitals dashboard. Future: automated session garbage collection.',
+    },
+    {
+      heading: 'Design Consistency at Scale',
+      status: 'solved',
+      problem: '19 sites built in 26 days. Without discipline, they\'d all look like generic AI output — same gradients, same hero sections, same "built by AI" aesthetic.',
+      solution: 'Full design system with 40 named palettes, 20 font pairings, 10 layout archetypes, and 20 award-winning reference site analyses. Mandatory Design Brief before any UI code. Rule: no two projects share visual DNA. Each site has its own personality.',
+    },
+    {
+      heading: 'Scaling Beyond One Human',
+      status: 'upcoming',
+      problem: 'SpiritTree currently depends on one human for: Stripe webhook secrets, expired cookie refreshes, OAuth re-auth, and final approval on public content. The human is the bottleneck.',
+      solution: 'Planned: expand the decision boundary so agents can self-serve on more operational tasks. NemoClaw\'s policy enforcement could provide guardrails for autonomous agent actions without human approval on every step. The goal is human-in-the-loop for strategy, agents-autonomous for execution.',
+    },
+  ]
+}
+
 const PRINCIPLES = {
   title: 'Operating Principles',
   color: C.slate,
@@ -384,6 +451,31 @@ export default function Specs() {
                 {ROADMAP.items.map((item, i) => (
                   <ProseCard key={i} heading={item.heading} text={item.text} accent={C.ember} />
                 ))}
+              </KanbanColumn>
+
+              {/* Roadblocks */}
+              <KanbanColumn section={ROADBLOCKS} span>
+                <div style={{ columns: '2 320px', columnGap: 8 }}>
+                {ROADBLOCKS.items.map((item, i) => (
+                  <Card key={i} accent={item.status === 'solved' ? '#16a34a' : item.status === 'active' ? '#dc2626' : item.status === 'mitigated' ? '#d97706' : '#6366f1'}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.9rem', color: 'var(--ink)' }}>{item.heading}</span>
+                      <span style={{
+                        fontFamily: 'var(--font-display)', fontSize: '0.6rem', fontWeight: 700,
+                        background: item.status === 'solved' ? '#16a34a' : item.status === 'active' ? '#dc2626' : item.status === 'mitigated' ? '#d97706' : '#6366f1',
+                        color: '#fff',
+                        padding: '2px 8px', borderRadius: 4, textTransform: 'uppercase', letterSpacing: '0.08em',
+                      }}>{item.status}</span>
+                    </div>
+                    <div style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', fontSize: '0.82rem', marginBottom: 6 }}>
+                      <strong style={{ color: 'var(--ink)' }}>Problem:</strong> {item.problem}
+                    </div>
+                    <div style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', fontSize: '0.82rem' }}>
+                      <strong style={{ color: item.status === 'solved' ? '#16a34a' : '#d97706' }}>Solution:</strong> {item.solution}
+                    </div>
+                  </Card>
+                ))}
+                </div>
               </KanbanColumn>
 
               {/* Principles */}
