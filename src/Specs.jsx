@@ -60,6 +60,32 @@ const DEPLOYMENT_LAYER = {
   ]
 }
 
+const SITES = {
+  title: 'What We\'ve Built',
+  color: '#0E4429',
+  items: [
+    { name: 'AgentOrchard', url: 'https://agentorchard.dev', summary: 'Open-source agent marketplace. 56 products (personas, skills, guides), Supabase auth, Stripe payments, full purchase/download flow. Aesop design system.' },
+    { name: 'SafeSpace', url: 'https://safespace.spirittree.dev', summary: 'Anonymous rental review platform. 11 cities, landlord accountability, USPS address validation, photo upload, anti-bot protection. Stone Garden design.' },
+    { name: 'MycoMaps', url: 'https://mycomaps.spirittree.dev', summary: 'Mushroom foraging directory. 100+ retailers, species guide, Google OAuth, full-text search, geocoding. AI mycologist chat on every page.' },
+    { name: 'Rootwork', url: 'https://rootwork.spirittree.dev', summary: 'Medicinal plant database. 164 plants, botanical images, interaction checker. Garden Oracle AI herbalist (refuses dosage advice, suggests professional consultation).' },
+    { name: 'Safety Net', url: 'https://safetynet.spirittree.dev', summary: '36 advocacy tools for AI-displaced workers. Rep lookup, letter composers, stipend calculators, co-op finders, skill mappers. Signal Fire design. Zero paywall.' },
+    { name: 'Displacement Weather', url: 'https://displacement.spirittree.dev', summary: 'Personal AI displacement forecast. Industry risk by role, interactive map, timeline projections. The Forecaster AI uses weather metaphors for career guidance.' },
+    { name: 'Displacement Index', url: 'https://displacementindex.spirittree.dev', summary: '56 occupations scored by AI displacement risk. Career Geographer AI compares roles and finds adjacent safe positions. Recharts visualizations.' },
+    { name: 'NarrativeDB', url: 'https://narrativedb.spirittree.dev', summary: 'Investment narrative tracker. Pattern Finder AI analyzes active market narratives. Stripe-inspired design system.' },
+    { name: 'CMPRSSN Diagnostic', url: 'https://diagnostic.spirittree.dev', summary: 'Compression diagnostic tool — measures how much of your life is compressed by routine. 7-day decompression protocol. Compression Analyst AI. Signal Lab design (#080C12 + teal).' },
+    { name: 'Clean Slate', url: 'https://cleanslate.spirittree.dev', summary: 'Recovery support toolkit. Meetings, milestones, journal, reflections, tools. The Companion AI runs client-side only (WebLLM) — no data ever leaves the device. Crisis resources (988/SAMHSA) always visible.' },
+    { name: 'Sacred Compounds', url: 'https://sacredcompounds.spirittree.dev', summary: '31 psychoactive substances documented. Classifications, safety profiles, research links. The Pharmacologist AI chat — harm reduction only, never encourages use.' },
+    { name: 'Proof of Care', url: 'https://proofofcare.spirittree.dev', summary: 'On-chain care attestation protocol on Base using EAS. No tokens, reputation only. The Witness AI helps compose attestations and impact narratives.' },
+    { name: 'Agent Wallet', url: 'https://agentwallet.spirittree.dev', summary: 'Fleet management for agent USDC wallets on Base mainnet. ERC-4337 smart wallets, spending rules, approval flows, analytics dashboard.' },
+    { name: 'Agent Vitals', url: 'https://vitals.spirittree.dev', summary: 'Live ops dashboard. 8 agents, 10 crons, gateway health, Telegram status — all from real gateway data. Ops Narrator AI generates status summaries.' },
+    { name: 'Enough Gauge', url: 'https://enough.spirittree.dev', summary: 'Sufficiency widget — helps you define "enough." The Philosopher AI reflects on your relationship with sufficiency. One-page, contemplative.' },
+    { name: 'Lost America', url: 'https://lostamerica.spirittree.dev', summary: '1000+ photos of vanishing American places. City galleries, era filters. Ghost Narrator AI — locations narrate their own stories in first person.' },
+    { name: 'SpiritTree', url: 'https://spirittree.dev', summary: 'The hub. Jewel Box bento grid design. Manifesto, agent swarm, all projects linked. Sapphire + amethyst + burgundy + gold palette.' },
+    { name: 'Dashboards', url: 'https://dashboards.spirittree.dev', summary: '10-tab AI economy dashboard. Market data, model comparisons, industry trends. Vite + React + Tailwind.' },
+    { name: 'Spore', url: 'https://github.com/sedim3nt/spore', summary: 'Open-source agent config library. 190 files — 13 agents, 15 skills, 14 guides, 20 packages. MIT license. The distribution backbone for AgentOrchard.' },
+  ]
+}
+
 const TOOLBOX = {
   title: 'Sedim3nt\'s Toolbox',
   color: C.sapphire,
@@ -424,6 +450,24 @@ export default function Specs() {
               columns: '2 380px',
               columnGap: 16,
             }} className="kanban-grid">
+
+              {/* What We've Built */}
+              <KanbanColumn section={SITES} span>
+                <div style={{ columns: '2 320px', columnGap: 8 }}>
+                {SITES.items.map((site, i) => (
+                  <Card key={i} accent="#0E4429">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <a href={site.url} target="_blank" rel="noopener noreferrer" style={{
+                        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.9rem',
+                        color: '#0E4429', textDecoration: 'none',
+                      }}>{site.name}</a>
+                      <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--stone)', opacity: 0.6 }}>↗</span>
+                    </div>
+                    <div style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', fontSize: '0.8rem', lineHeight: 1.6 }}>{site.summary}</div>
+                  </Card>
+                ))}
+                </div>
+              </KanbanColumn>
 
               {/* The Thesis */}
               <KanbanColumn section={MANIFESTO}>
