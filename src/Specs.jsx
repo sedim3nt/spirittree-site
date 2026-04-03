@@ -64,7 +64,7 @@ const SITES = {
   title: 'What We\'ve Built',
   color: '#0E4429',
   items: [
-    { name: 'AgentOrchard', url: 'https://agentorchard.dev', summary: 'Open-source agent marketplace. 56 products (personas, skills, guides), Supabase auth, Stripe payments, full purchase/download flow. Aesop design system.' },
+    { name: 'AgentOrchard', url: 'https://agentorchard.dev', summary: 'Agent marketplace. 56 products (personas, skills, guides) — free to download, Supabase auth, Stripe payments, full purchase/download flow. Aesop design system. The commercial front door to the SpiritTree ecosystem.' },
     { name: 'SafeSpace', url: 'https://safespace.spirittree.dev', summary: 'Anonymous rental review platform. 11 cities, landlord accountability, USPS address validation, photo upload, anti-bot protection. Stone Garden design.' },
     { name: 'MycoMaps', url: 'https://mycomaps.spirittree.dev', summary: 'Mushroom foraging directory. 100+ retailers, species guide, Google OAuth, full-text search, geocoding. AI mycologist chat on every page.' },
     { name: 'Rootwork', url: 'https://rootwork.spirittree.dev', summary: 'Medicinal plant database. 164 plants, botanical images, interaction checker. Garden Oracle AI herbalist (refuses dosage advice, suggests professional consultation).' },
@@ -82,7 +82,7 @@ const SITES = {
     { name: 'Lost America', url: 'https://lostamerica.spirittree.dev', summary: '1000+ photos of vanishing American places. City galleries, era filters. Ghost Narrator AI — locations narrate their own stories in first person.' },
     { name: 'SpiritTree', url: 'https://spirittree.dev', summary: 'The hub. Jewel Box bento grid design. Manifesto, agent swarm, all projects linked. Sapphire + amethyst + burgundy + gold palette.' },
     { name: 'Dashboards', url: 'https://dashboards.spirittree.dev', summary: '10-tab AI economy dashboard. Market data, model comparisons, industry trends. Vite + React + Tailwind.' },
-    { name: 'Spore', url: 'https://github.com/sedim3nt/spore', summary: 'Open-source agent config library. 190 files — 13 agents, 15 skills, 14 guides, 20 packages. MIT license. The distribution backbone for AgentOrchard.' },
+    { name: 'Spore (Open Source)', url: 'https://github.com/sedim3nt/spore', summary: 'The open-source agent config library. 190 files — 13 agents, 15 skills, 14 guides, 20 packages. MIT license. Anyone can fork, deploy, and run their own agent stack. AgentOrchard is the marketplace built on top of it.' },
   ]
 }
 
@@ -451,24 +451,6 @@ export default function Specs() {
               columnGap: 16,
             }} className="kanban-grid">
 
-              {/* What We've Built */}
-              <KanbanColumn section={SITES} span>
-                <div style={{ columns: '2 320px', columnGap: 8 }}>
-                {SITES.items.map((site, i) => (
-                  <Card key={i} accent="#0E4429">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                      <a href={site.url} target="_blank" rel="noopener noreferrer" style={{
-                        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.9rem',
-                        color: '#0E4429', textDecoration: 'none',
-                      }}>{site.name}</a>
-                      <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--stone)', opacity: 0.6 }}>↗</span>
-                    </div>
-                    <div style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', fontSize: '0.8rem', lineHeight: 1.6 }}>{site.summary}</div>
-                  </Card>
-                ))}
-                </div>
-              </KanbanColumn>
-
               {/* The Thesis */}
               <KanbanColumn section={MANIFESTO}>
                 {MANIFESTO.content.map((item, i) => (
@@ -610,6 +592,24 @@ export default function Specs() {
                     <div style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', fontSize: '0.82rem' }}>
                       <strong style={{ color: item.status === 'solved' ? '#16a34a' : '#d97706' }}>Solution:</strong> {item.solution}
                     </div>
+                  </Card>
+                ))}
+                </div>
+              </KanbanColumn>
+
+              {/* What We've Built */}
+              <KanbanColumn section={SITES} span>
+                <div style={{ columns: '2 320px', columnGap: 8 }}>
+                {SITES.items.map((site, i) => (
+                  <Card key={i} accent="#0E4429">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <a href={site.url} target="_blank" rel="noopener noreferrer" style={{
+                        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.9rem',
+                        color: '#0E4429', textDecoration: 'none',
+                      }}>{site.name}</a>
+                      <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--stone)', opacity: 0.6 }}>↗</span>
+                    </div>
+                    <div style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', fontSize: '0.8rem', lineHeight: 1.6 }}>{site.summary}</div>
                   </Card>
                 ))}
                 </div>
