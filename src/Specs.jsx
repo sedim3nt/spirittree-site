@@ -237,6 +237,53 @@ const ROADBLOCKS = {
   ]
 }
 
+const MEMORY_ARCH = {
+  title: 'Memory Architecture',
+  color: '#4338CA',
+  layers: [
+    {
+      name: 'File-Based Memory',
+      tag: 'Always Loaded',
+      desc: '7 workspace files injected every session: AGENTS.md (operating rules), SOUL.md (personality), IDENTITY.md (who I am), USER.md (who you are), TOOLS.md (local environment), HEARTBEAT.md (monitoring), MEMORY.md (policy bible — decisions, cron table, sites, key policies). Curated by hand, not automatic. When something matters long-term, it gets written here. These survive forever.',
+    },
+    {
+      name: 'Daily Logs',
+      tag: 'Read on Startup',
+      desc: 'memory/YYYY-MM-DD.md — today + yesterday read at session start. Captures what shipped, what broke, what\'s pending. Accumulates until nightly consolidation prunes them. Ephemeral by design.',
+    },
+    {
+      name: 'LCM (Lossless Context Management)',
+      tag: 'Persistent',
+      desc: 'OpenClaw plugin backed by SQLite (591 summaries, 31K messages, 186MB). Every conversation gets stored. When context gets long, older messages compress into summary nodes arranged in a DAG (directed acyclic graph). Summaries compress into higher-level summaries — like git squash for conversations. At session start, compressed summaries load automatically. When detail is needed, the agent drills back into the DAG on demand. Settings: freshTailCount=10, contextThreshold=0.75.',
+    },
+    {
+      name: 'autoDream',
+      tag: 'Nightly at 1:30 AM',
+      desc: 'Cron job that consolidates the day. Reads MEMORY.md, BRIDGE.md, FAILURE_MODEL.md, searches LCM for the day\'s decisions, then: updates MEMORY.md if policies changed, refreshes BRIDGE.md (state snapshot), writes memory/dream-YYYY-MM-DD.md as audit trail.',
+    },
+  ],
+  flow: 'Sessions write daily logs → autoDream consolidates into MEMORY.md → LCM compresses conversations → next session wakes up with policies + compressed history + recent logs. Continuity across hundreds of sessions without ever exceeding the context window.',
+}
+
+const SESSION_FILES = {
+  title: 'What Loads Per Session',
+  color: '#0F766E',
+  files: [
+    { name: 'AGENTS.md', purpose: 'Operating rules, agent roles, Blueprint pattern, retry policy, decision boundaries' },
+    { name: 'SOUL.md', purpose: 'Personality, voice, principles, SpiritTree values, identity in 2026' },
+    { name: 'TOOLS.md', purpose: 'Local environment notes — camera names, SSH hosts, TTS voices' },
+    { name: 'IDENTITY.md', purpose: 'Name, emoji, network, role, mantras' },
+    { name: 'USER.md', purpose: 'Human operator profile — skills, goals, communication preferences' },
+    { name: 'HEARTBEAT.md', purpose: 'Monitoring config — intervals, verification checks, known issues, infrastructure health' },
+    { name: 'MEMORY.md', purpose: 'Policy bible — decisions, cron table, site inventory, key policies, agent config' },
+  ],
+  also: [
+    'LCM summaries (compressed conversation DAG from SQLite)',
+    'memory/YYYY-MM-DD.md (today + yesterday, read manually per AGENTS.md)',
+    'Everything else (scripts, PRDs, research, REFERENCE.md, TODO.md) — only read when explicitly needed for a task',
+  ],
+}
+
 const PRINCIPLES = {
   title: 'Operating Principles',
   color: C.slate,
@@ -444,6 +491,52 @@ export default function Specs() {
                     </div>
                   </Card>
                 ))}
+              </KanbanColumn>
+
+              {/* Session Files */}
+              <KanbanColumn section={SESSION_FILES}>
+                {SESSION_FILES.files.map((f, i) => (
+                  <Card key={i} accent="#0F766E">
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                      <code style={{
+                        fontFamily: 'monospace', fontSize: '0.78rem', fontWeight: 700,
+                        background: '#0F766E15', color: '#0F766E',
+                        padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', flexShrink: 0,
+                      }}>{f.name}</code>
+                      <span style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', fontSize: '0.8rem' }}>{f.purpose}</span>
+                    </div>
+                  </Card>
+                ))}
+                <div style={{ padding: '8px 14px 4px', borderTop: '1px solid rgba(0,0,0,0.05)', marginTop: 4 }}>
+                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.78rem', color: '#0F766E', marginBottom: 6 }}>Also loaded:</div>
+                  {SESSION_FILES.also.map((item, i) => (
+                    <div key={i} style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', color: 'var(--stone)', marginBottom: 3, paddingLeft: 10, borderLeft: '2px solid #0F766E30' }}>{item}</div>
+                  ))}
+                </div>
+              </KanbanColumn>
+
+              {/* Memory Architecture */}
+              <KanbanColumn section={MEMORY_ARCH}>
+                {MEMORY_ARCH.layers.map((layer, i) => (
+                  <Card key={i} accent="#4338CA">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.9rem', color: 'var(--ink)' }}>{layer.name}</span>
+                      <span style={{
+                        fontFamily: 'var(--font-display)', fontSize: '0.6rem', fontWeight: 700,
+                        background: '#4338CA', color: '#fff',
+                        padding: '2px 8px', borderRadius: 4, textTransform: 'uppercase', letterSpacing: '0.05em',
+                      }}>{layer.tag}</span>
+                    </div>
+                    <div style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', fontSize: '0.82rem', lineHeight: 1.65 }}>{layer.desc}</div>
+                  </Card>
+                ))}
+                <div style={{
+                  margin: '8px 10px 6px', padding: '12px 14px',
+                  background: '#4338CA10', borderRadius: 8, borderLeft: '3px solid #4338CA',
+                }}>
+                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.78rem', color: '#4338CA', marginBottom: 4 }}>The Flow</div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: 'var(--stone)', lineHeight: 1.6 }}>{MEMORY_ARCH.flow}</div>
+                </div>
               </KanbanColumn>
 
               {/* What's Next */}
