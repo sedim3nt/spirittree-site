@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import AIChatWidget from './components/AIChatWidget'
 
 const fade = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } } }
 const stagger = { show: { transition: { staggerChildren: 0.08 } } }
@@ -588,6 +589,7 @@ export default function App() {
       <Projects />
       <Manifesto />
       <Footer />
+      <AIChatWidget />
     </>
   )
 }
