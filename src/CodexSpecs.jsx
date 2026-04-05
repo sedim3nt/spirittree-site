@@ -28,15 +28,15 @@ const TRANSITION = {
   content: [
     {
       heading: 'What Changed',
-      text: 'The original operating model depended on Claude CLI as the primary working surface inside OpenClaw. That made sense while Anthropic remained the stable center of the stack. Once that path began to close, the weakness became obvious: the system was too tightly organized around one vendor for the deepest implementation work.',
+      text: 'The original operating model treated Claude CLI inside OpenClaw as the main place where serious work happened. That held as long as Anthropic remained the stable center of the stack. Once that path began to close, the weakness was obvious: the deepest implementation work was too dependent on one vendor.',
     },
     {
       heading: 'Why It Mattered',
-      text: 'This was not a cosmetic tooling swap. OpenClaw had become the shell around a real business: multiple live websites, Telegram operations, PRDs, cron jobs, Stripe flows, and a growing archive of operational memory. Any transition had to preserve continuity while changing the place where real work happened.',
+      text: 'This was not a cosmetic tooling swap. OpenClaw had become the shell around a real business: live websites, Telegram operations, PRDs, cron jobs, Stripe flows, and a growing operational memory. The transition had to preserve continuity while changing where the work was actually done.',
     },
     {
       heading: 'The Actual Problem',
-      text: 'OpenClaw remained useful as an orchestration layer, but it was no longer the best place to do sustained coding, debugging, UI work, deployment repair, or repo-level architecture. The old model blurred dispatch and execution. We needed to separate them cleanly.',
+      text: 'OpenClaw still worked as an orchestration layer, but it was no longer the right place for sustained coding, debugging, UI work, deployment repair, or repo architecture. The old model blurred dispatch and execution. The new one separates them.',
     },
   ],
 }
@@ -47,15 +47,15 @@ const DECISIONS = {
   content: [
     {
       heading: 'Codex Becomes the Primary Build Surface',
-      text: 'Codex now handles the work that touches repositories: implementation, debugging, refactors, QA, migrations, deployment fixes, copy placement, and interface polish. The coding agent is no longer downstream of Telegram. It is the primary place where the codebase is read and changed.',
+      text: 'Codex now owns repo work: implementation, debugging, refactors, QA, migrations, deployment fixes, copy placement, and interface polish. The coding surface is no longer downstream of Telegram. It is the primary place where the codebase is read and changed.',
     },
     {
       heading: 'Sedim3nt Is Not Removed',
-      text: 'Sedim3nt was not discarded. The role changed. Sedim3nt remains the chief of staff, dispatcher, operator, and status voice of the system. Intake, routing, summaries, progress reporting, and Telegram relationship ownership stay with Sedim3nt.',
+      text: 'Sedim3nt was not discarded; the role changed. Sedim3nt remains the chief of staff, dispatcher, operator, and status voice of the system. Intake, routing, summaries, progress reporting, and Telegram ownership stay there.',
     },
     {
       heading: 'OpenClaw Stays, But Narrows',
-      text: 'OpenClaw is no longer treated as the main coding surface. It remains valuable where it is strongest: channel routing, Telegram access, scheduled jobs, remote supervision, and background orchestration. In other words, it becomes the operational shell around the build system, not the build system itself.',
+      text: 'OpenClaw is no longer treated as the main coding surface. It remains valuable where it is strongest: channel routing, Telegram access, scheduled jobs, remote supervision, and background orchestration. It becomes the operational shell around the build system, not the build system itself.',
     },
   ],
 }
@@ -88,9 +88,9 @@ const AGENT_REALIGNMENT = {
   color: C.amethyst,
   items: [
     { emoji: '🦋', name: 'Sedim3nt', role: 'Chief of Staff / Dispatcher', model: 'Operational shell', desc: 'Owns intake, triage, routing, summaries, and the human-facing status format. No longer the default place where full coding work is executed.' },
-    { emoji: '🪨', name: 'Granit3', role: 'Legacy Coding Role', model: 'Historical pattern', desc: 'The coding brief-pattern still matters, but the actual implementation center shifts into Codex for serious repo work.' },
-    { emoji: '💬', name: 'Claude Copy Agent', role: 'Optional Specialist', model: 'Writing layer', desc: 'A separate Claude-backed OpenClaw agent can still be useful for copywriting if Anthropic access remains available. That is a specialist role, not the central execution model.' },
-    { emoji: '⛰️', name: 'B3dRock', role: 'Codex Identity', model: 'Primary builder', desc: 'The grounded execution surface: inspect the repo, make the change, test it, push it, and keep the operational model coherent.' },
+    { emoji: '🪨', name: 'Granit3', role: 'Legacy Coding Role', model: 'Historical pattern', desc: 'The old coding brief-pattern still matters, but the actual center of implementation moves into Codex.' },
+    { emoji: '💬', name: 'Claude Copy Agent', role: 'Optional Specialist', model: 'Writing layer', desc: 'A separate Claude-backed OpenClaw agent can still help with copy if Anthropic access remains available. That is a specialist role, not the center of execution.' },
+    { emoji: '⛰️', name: 'B3dRock', role: 'Codex Identity', model: 'Primary builder', desc: 'The grounded execution surface: inspect the repo, make the change, test it, push it, and keep the system coherent.' },
   ],
 }
 
@@ -98,11 +98,11 @@ const WORKFLOW = {
   title: 'The New Workflow',
   color: C.forest,
   items: [
-    { date: '1', event: 'You send a request from Codex directly when the task touches files, code, deployment, architecture, or design.' },
-    { date: '2', event: 'You use Telegram when you want remote intake, status, quick direction, reminders, or “start this and report back.”' },
-    { date: '3', event: 'Sedim3nt classifies the request, routes it, and reports progress in a standard four-part format: what started, what shipped, what is blocked, and what is needed from you.' },
-    { date: '4', event: 'Codex performs the real implementation locally against the actual repository, then verifies the outcome with build, lint, test, and live checks where appropriate.' },
-    { date: '5', event: 'OpenClaw remains the connective tissue: Telegram channel, session history, orchestrated jobs, and the light operational shell around the coding system.' },
+    { date: '1', event: 'Start in Codex when the task touches files, code, deployment, architecture, or design.' },
+    { date: '2', event: 'Use Telegram when you want remote intake, status, quick direction, reminders, or “start this and report back.”' },
+    { date: '3', event: 'Sedim3nt classifies the request, routes it, and reports progress in a four-part format: what started, what shipped, what is blocked, and what is needed from you.' },
+    { date: '4', event: 'Codex performs the implementation locally against the real repository, then verifies the result with build, lint, test, and live checks where appropriate.' },
+    { date: '5', event: 'OpenClaw remains the connective tissue: Telegram, session history, orchestrated jobs, and the operational shell around the coding system.' },
   ],
 }
 
@@ -112,15 +112,15 @@ const SAFE_GUARDS = {
   items: [
     {
       heading: 'High-Risk Operations Stay Explicit',
-      text: 'Payments, banking, wallet actions, credential changes, and public posting remain gated. Codex can prepare and implement the system; Sedim3nt can monitor and summarize it; but risky actions stay deliberate.',
+      text: 'Payments, banking, wallet actions, credential changes, and public posting remain gated. Codex can prepare the system. Sedim3nt can monitor and summarize it. Risky actions stay deliberate.',
     },
     {
       heading: 'OpenClaw Is No Longer a Catch-All',
-      text: 'One of the clearest lessons from the migration is that orchestration layers expand until they become confusing unless their domain is named precisely. OpenClaw now has a narrower brief: dispatch, automation, channels, and memory continuity.',
+      text: 'One lesson from the migration is that orchestration layers expand until they become confusing unless their domain is named precisely. OpenClaw now has a narrower brief: dispatch, automation, channels, and memory continuity.',
     },
     {
       heading: 'Thread Discipline Matters',
-      text: 'Codex works best when threads are separated by system: SafeSpace product work in one thread, auth and backend in another, OpenClaw operations in another, random tool questions elsewhere. This reduces stale assumptions and preserves sharper context.',
+      text: 'Codex works best when threads are separated by system: SafeSpace product work in one thread, auth and backend in another, OpenClaw operations in another, random tool questions elsewhere. That reduces stale assumptions and preserves sharper context.',
     },
   ],
 }
@@ -144,7 +144,7 @@ const LESSONS = {
     { label: 'Do Not Fuse Chat Surface and Execution Surface', text: 'The chat interface that feels convenient is not always the place where engineering work should happen.' },
     { label: 'Specialize Your Agents', text: 'An operator, a builder, and a writer can coexist cleanly if their boundaries are explicit and enforced in prompts and workflow.' },
     { label: 'Keep the Local Repo Real', text: 'The system becomes easier to debug once you stop treating the agent framework as magic and remember that real files, real git history, and real build tools are the source of truth.' },
-    { label: 'Preserve Continuity, Change the Center', text: 'A migration is less disruptive when you keep the orchestration shell and session memory, but move the center of gravity for implementation to a better tool.' },
+    { label: 'Preserve Continuity, Change the Center', text: 'A migration is less disruptive when you keep the orchestration shell and session memory, but move implementation to a better tool.' },
   ]
 }
 
@@ -263,8 +263,8 @@ export default function CodexSpecs() {
                 maxWidth: 760, lineHeight: 1.7,
               }}>
                 A field report on what happens when an agent stack built around Claude CLI has to change centers without
-                losing continuity. This is the transition spec: what broke, what we kept, what we changed, and how the
-                new Codex-centered operating model works in practice.
+                losing continuity. This spec covers what broke, what stayed, what changed, and how the new
+                Codex-centered operating model works in practice.
               </p>
             </motion.div>
 
