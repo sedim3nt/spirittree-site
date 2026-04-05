@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const fade = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } } }
 const stagger = { show: { transition: { staggerChildren: 0.04 } } }
@@ -333,12 +334,22 @@ function SpecNav() {
       borderBottom: '1px solid rgba(21,46,128,0.1)',
     }}>
       <div style={{ ...W, display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
-        <a href="/" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.25rem', color: C.sapphire, textDecoration: 'none' }}>
-          SpiritTree
-        </a>
-        <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '0.85rem', color: C.amethyst, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-          System Specs
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
+          <Link to="/specs" style={{
+            fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '0.85rem',
+            color: C.amethyst, textDecoration: 'none', letterSpacing: '0.04em',
+            textTransform: 'uppercase', borderBottom: `2px solid ${C.amethyst}`, paddingBottom: 4,
+          }}>
+            OpenClaw/Claude Specs
+          </Link>
+          <Link to="/codex" style={{
+            fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '0.85rem',
+            color: C.sapphire, textDecoration: 'none', letterSpacing: '0.04em',
+            textTransform: 'uppercase', borderBottom: '2px solid transparent', paddingBottom: 4,
+          }}>
+            Codex Specs
+          </Link>
+        </div>
       </div>
     </nav>
   )
