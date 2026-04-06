@@ -22,6 +22,133 @@ const C = {
 
 const W = { maxWidth: 1280, margin: '0 auto', padding: '0 32px' }
 
+const TODAY = {
+  title: 'Today’s Optimization Story',
+  color: C.deepIndigo,
+  content: [
+    {
+      heading: 'What We Learned',
+      text: 'The system gets weaker when dispatch, execution, continuity, and authority all live in the same implicit layer. We needed explicit ownership: who routes, who acts, who approves, who records, and who preserves continuity.',
+    },
+    {
+      heading: 'What We Did',
+      text: 'We turned the operating model into actual artifacts: identity files, context policies, delegation schemas, tool scopes, trace schemas, checkpoint schemas, module definitions, a validator, and a bounded MVP flow.',
+    },
+    {
+      heading: 'Where We Landed',
+      text: 'B3dRock is no longer just a name or a prompt pattern. It now has a concrete config layer, a validated path for bounded execution, and a clearer operating split: Sedim3nt dispatches, Shield scopes, Codex executes, Proving Ground records, and OpenClaw preserves continuity.',
+    },
+  ],
+}
+
+const CURRENT_STATE = {
+  title: 'Current State',
+  color: C.navy,
+  items: [
+    { stat: '1', label: 'Versioned config layer' },
+    { stat: '1', label: 'Validator' },
+    { stat: '1', label: 'MVP flow' },
+    { stat: '3', label: 'Named modules' },
+    { stat: '3', label: 'Named agent surfaces' },
+  ],
+}
+
+const TODAY_ARTIFACTS = {
+  title: 'What Exists Now',
+  color: C.sapphire,
+  categories: [
+    {
+      name: 'Identity',
+      tools: ['Agent identity files', 'Role overlays', 'Execution modes', 'Refusal boundaries'],
+    },
+    {
+      name: 'Context',
+      tools: ['Surface-specific context policies', 'Compaction rules', 'Handoff requirements', 'Blocked fields'],
+    },
+    {
+      name: 'Authority',
+      tools: ['Delegation chain schema', 'Tool scope registry', 'Approval classes', 'Workspace policies'],
+    },
+    {
+      name: 'Observability',
+      tools: ['Trace schema', 'Checkpoint schema', 'Failure taxonomy', 'Event types'],
+    },
+    {
+      name: 'Modules',
+      tools: ['Repo work', 'Operator dispatch', 'Continuity'],
+    },
+  ],
+}
+
+const TODAY_FLOW = {
+  title: 'Current Operating Flow',
+  color: C.forest,
+  items: [
+    { date: '1', event: 'An operator request enters through Sedim3nt.' },
+    { date: '2', event: 'Sedim3nt selects the module and creates the task frame.' },
+    { date: '3', event: 'Context is assembled from explicit identity and context-policy artifacts.' },
+    { date: '4', event: 'Shield evaluates scope, denied actions, and approval requirements.' },
+    { date: '5', event: 'Codex executes inside the granted scope.' },
+    { date: '6', event: 'Proving Ground records traces and checkpoints.' },
+    { date: '7', event: 'OpenClaw preserves continuity and Sedim3nt reports back to the operator.' },
+  ],
+}
+
+const ARCHITECTURE = {
+  title: 'Visual Architecture',
+  color: C.gold,
+  chain: ['Sedim3nt', 'Shield', 'Codex', 'Proving Ground', 'OpenClaw'],
+  captions: {
+    Sedim3nt: 'Dispatches',
+    Shield: 'Scopes',
+    Codex: 'Executes',
+    'Proving Ground': 'Records',
+    OpenClaw: 'Preserves continuity',
+  },
+}
+
+const TODAY_BOUNDARIES = {
+  title: 'Optimization Boundaries',
+  color: C.ember,
+  items: [
+    {
+      heading: 'Dispatch Is Not Execution',
+      text: 'Sedim3nt routes and supervises. Codex implements and verifies. That separation is now part of the system design rather than just an informal habit.',
+    },
+    {
+      heading: 'Continuity Is Not Authority',
+      text: 'OpenClaw preserves identity and session continuity, but it does not need to own final dispatch authority or privileged repo execution.',
+    },
+    {
+      heading: 'Policy Is Not Prompting',
+      text: 'Approvals, denials, and scope boundaries now belong to explicit artifacts and decisions, not only to model behavior inside a prompt.',
+    },
+    {
+      heading: 'Legibility Comes Before Scale',
+      text: 'We are not trying to make the system more autonomous before it becomes more legible. The immediate gain is clarity, traceability, and operator control.',
+    },
+  ],
+}
+
+const TODAY_SPEC = {
+  title: 'The B3dRock Layer',
+  color: C.cedar,
+  content: [
+    {
+      heading: 'Primary Rule',
+      text: 'If the task touches files, code, deployment, or implementation, the default execution surface is Codex. If the task is intake, routing, operator control, or continuity, the default surface is Sedim3nt and OpenClaw.',
+    },
+    {
+      heading: 'MVP Outcome',
+      text: 'The system now has a concrete config layer and a validated bounded flow. That means the operating model can be checked, reasoned about, and extended without relying on memory alone.',
+    },
+    {
+      heading: 'What Comes Next',
+      text: 'The next move is to replace demo artifacts with live trace emission from real dispatched work, then expand replay, evaluation, and cost attribution from there.',
+    },
+  ],
+}
+
 const TRANSITION = {
   title: 'The Break',
   color: C.deepIndigo,
@@ -256,15 +383,16 @@ export default function CodexSpecs() {
                 fontSize: 'clamp(2rem, 4vw, 3.2rem)', color: 'var(--ink)',
                 marginBottom: 12,
               }}>
-                From OpenClaw to Codex
+                From OpenClaw to Codex, Then into B3dRock
               </h1>
               <p style={{
                 fontFamily: 'var(--font-body)', fontSize: '1.1rem', color: 'var(--stone)',
-                maxWidth: 760, lineHeight: 1.7,
+                maxWidth: 820, lineHeight: 1.7,
               }}>
-                A field report on what happens when an agent stack built around Claude CLI has to change centers without
-                losing continuity. This spec covers what broke, what stayed, what changed, and how the new
-                Codex-centered operating model works in practice.
+                This page now holds two connected stories. First: the migration story that moved implementation
+                work out of OpenClaw and into Codex. Second: the optimization story that turned B3dRock from
+                an execution identity into a concrete operating layer with explicit boundaries, artifacts, and
+                a validated MVP flow.
               </p>
             </motion.div>
 
@@ -274,9 +402,9 @@ export default function CodexSpecs() {
               gap: 12,
               marginBottom: 40,
             }} className="numbers-grid">
-              {BENEFITS.items.map((n, i) => (
+              {CURRENT_STATE.items.map((n, i) => (
                 <div key={i} style={{
-                  background: BENEFITS.color,
+                  background: CURRENT_STATE.color,
                   borderRadius: 12,
                   padding: '18px 14px',
                   color: '#fff',
@@ -289,6 +417,98 @@ export default function CodexSpecs() {
             </motion.div>
 
             <div style={{ columns: '2 380px', columnGap: 16 }} className="kanban-grid">
+              <KanbanColumn section={TODAY}>
+                {TODAY.content.map((item, i) => (
+                  <ProseCard key={i} heading={item.heading} text={item.text} accent={C.deepIndigo} />
+                ))}
+              </KanbanColumn>
+
+              <KanbanColumn section={TODAY_ARTIFACTS}>
+                {TODAY_ARTIFACTS.categories.map((cat, i) => (
+                  <Card key={i} accent={C.sapphire}>
+                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.85rem', color: C.sapphire, marginBottom: 6 }}>{cat.name}</div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                      {cat.tools.map((tool, j) => (
+                        <span key={j} style={{
+                          fontFamily: 'var(--font-body)', fontSize: '0.75rem',
+                          background: `${C.sapphire}10`, color: C.sapphire,
+                          padding: '3px 8px', borderRadius: 6, whiteSpace: 'nowrap',
+                        }}>{tool}</span>
+                      ))}
+                    </div>
+                  </Card>
+                ))}
+              </KanbanColumn>
+
+              <KanbanColumn section={TODAY_FLOW}>
+                {TODAY_FLOW.items.map((item, i) => (
+                  <Card key={i} accent={C.forest}>
+                    <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
+                      <span style={{
+                        fontFamily: 'var(--font-display)', fontSize: '0.72rem', fontWeight: 700,
+                        background: `${C.forest}15`, color: C.forest,
+                        padding: '2px 8px', borderRadius: 4, whiteSpace: 'nowrap', flexShrink: 0,
+                      }}>{item.date}</span>
+                      <span style={{ fontFamily: 'var(--font-body)', color: 'var(--ink)', fontSize: '0.82rem' }}>{item.event}</span>
+                    </div>
+                  </Card>
+                ))}
+              </KanbanColumn>
+
+              <KanbanColumn section={ARCHITECTURE} span>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 10,
+                  flexWrap: 'wrap',
+                  padding: '8px 6px 4px',
+                }}>
+                  {ARCHITECTURE.chain.map((node, i) => (
+                    <div key={node} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                      <div style={{
+                        minWidth: 150,
+                        background: '#fff',
+                        border: `1px solid ${ARCHITECTURE.color}33`,
+                        borderRadius: 12,
+                        padding: '14px 16px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                      }}>
+                        <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.95rem', color: 'var(--ink)', marginBottom: 4 }}>
+                          {node}
+                        </div>
+                        <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', color: 'var(--stone)', lineHeight: 1.5 }}>
+                          {ARCHITECTURE.captions[node]}
+                        </div>
+                      </div>
+                      {i < ARCHITECTURE.chain.length - 1 && (
+                        <div style={{
+                          fontFamily: 'var(--font-display)',
+                          fontWeight: 700,
+                          fontSize: '1rem',
+                          color: ARCHITECTURE.color,
+                          padding: '0 2px',
+                        }}>
+                          →
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </KanbanColumn>
+
+              <KanbanColumn section={TODAY_SPEC}>
+                {TODAY_SPEC.content.map((item, i) => (
+                  <ProseCard key={i} heading={item.heading} text={item.text} accent={C.cedar} />
+                ))}
+              </KanbanColumn>
+
+              <KanbanColumn section={TODAY_BOUNDARIES}>
+                {TODAY_BOUNDARIES.items.map((item, i) => (
+                  <ProseCard key={i} heading={item.heading} text={item.text} accent={C.ember} />
+                ))}
+              </KanbanColumn>
+
               <KanbanColumn section={TRANSITION}>
                 {TRANSITION.content.map((item, i) => (
                   <ProseCard key={i} heading={item.heading} text={item.text} accent={C.deepIndigo} />
@@ -309,7 +529,7 @@ export default function CodexSpecs() {
                       {cat.tools.map((tool, j) => (
                         <span key={j} style={{
                           fontFamily: 'var(--font-body)', fontSize: '0.75rem',
-                          background: C.sapphire + '10', color: C.sapphire,
+                          background: `${C.sapphire}10`, color: C.sapphire,
                           padding: '3px 8px', borderRadius: 6, whiteSpace: 'nowrap',
                         }}>{tool}</span>
                       ))}
@@ -326,7 +546,7 @@ export default function CodexSpecs() {
                       <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.92rem', color: 'var(--ink)' }}>{agent.name}</span>
                       <span style={{
                         fontFamily: 'var(--font-display)', fontSize: '0.62rem', fontWeight: 600,
-                        background: C.amethyst + '18', color: C.amethyst,
+                        background: `${C.amethyst}18`, color: C.amethyst,
                         padding: '2px 8px', borderRadius: 4, textTransform: 'uppercase', letterSpacing: '0.05em',
                       }}>{agent.model}</span>
                     </div>
@@ -342,7 +562,7 @@ export default function CodexSpecs() {
                     <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
                       <span style={{
                         fontFamily: 'var(--font-display)', fontSize: '0.72rem', fontWeight: 700,
-                        background: C.forest + '15', color: C.forest,
+                        background: `${C.forest}15`, color: C.forest,
                         padding: '2px 8px', borderRadius: 4, whiteSpace: 'nowrap', flexShrink: 0,
                       }}>{item.date}</span>
                       <span style={{ fontFamily: 'var(--font-body)', color: 'var(--ink)', fontSize: '0.82rem' }}>{item.event}</span>
@@ -361,6 +581,23 @@ export default function CodexSpecs() {
                 {SAFE_GUARDS.items.map((item, i) => (
                   <ProseCard key={i} heading={item.heading} text={item.text} accent={C.ember} />
                 ))}
+              </KanbanColumn>
+
+              <KanbanColumn section={BENEFITS}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8 }}>
+                  {BENEFITS.items.map((n, i) => (
+                    <div key={i} style={{
+                      background: BENEFITS.color,
+                      borderRadius: 10,
+                      padding: '14px 10px',
+                      color: '#fff',
+                      textAlign: 'center',
+                    }}>
+                      <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 800, lineHeight: 1 }}>{n.stat}</div>
+                      <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.66rem', opacity: 0.72, marginTop: 4 }}>{n.label}</div>
+                    </div>
+                  ))}
+                </div>
               </KanbanColumn>
 
               <KanbanColumn section={LESSONS} span>
