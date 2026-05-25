@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
+import { arizonaPresets } from './geolayers-presets/arizona'
+import { coloradoPresets } from './geolayers-presets/colorado'
+import { newMexicoPresets } from './geolayers-presets/new-mexico'
 
 const COLORS = {
   canvas: '#F7F1E8',
@@ -19,7 +22,7 @@ const MACROSTRAT_BASE = import.meta.env.VITE_GEOLAYERS_MACROSTRAT_BASE || 'https
 const MAP_EMBED_BASE = import.meta.env.VITE_GEOLAYERS_MAP_EMBED_BASE || 'https://www.openstreetmap.org/export/embed.html'
 const CACHE_KEY = 'spirittree-geolayers-cache-v1'
 
-const PRESETS = [
+const UTAH_PRESETS = [
   {
     id: 'moab',
     name: 'Moab Rim',
@@ -85,6 +88,18 @@ const PRESETS = [
     ],
   },
 ]
+
+// Curated regions. Live Macrostrat + Nominatim lookup works anywhere; these
+// presets add a deeper illustrated stack story when a point lands in a
+// supported region. Expanding state by state toward worldwide coverage.
+const PRESETS = [
+  ...UTAH_PRESETS.map((preset) => ({ ...preset, state: 'Utah' })),
+  ...arizonaPresets,
+  ...coloradoPresets,
+  ...newMexicoPresets,
+]
+
+const PRESET_STATES = ['Utah', 'Arizona', 'Colorado', 'New Mexico']
 
 function safeStorageRead() {
   try {
@@ -268,8 +283,11 @@ function buildRegionalStory(location, geology) {
   const preset = pickPreset(location.lat, location.lng)
   if (!preset) return null
 
-  const state = location.address?.state || location.displayName || ''
-  if (!String(state).toLowerCase().includes('utah')) {
+  // Only surface the curated stack when the point is actually within the
+  // preset's state (proximity alone could match across a nearby border).
+  // If the geocoder returned no state, fall back to the proximity match.
+  const locState = String(location.address?.state || location.displayName || '').toLowerCase()
+  if (preset.state && locState && !locState.includes(preset.state.toLowerCase())) {
     return null
   }
 
@@ -289,7 +307,7 @@ function buildNarrative(location, geology, regionalStory) {
   if (primary.name) parts.push(`${primary.name} is the strongest mapped surface unit at this point.`)
   if (primary.lith && primary.lith !== 'Lithology unavailable') parts.push(`Macrostrat lists the lithology as ${primary.lith.toLowerCase()}.`)
   if (primary.description) parts.push(primary.description)
-  if (regionalStory) parts.push(`For the wider Utah-first read, this point aligns with the ${regionalStory.name} regional stack.`)
+  if (regionalStory) parts.push(`For the curated read, this point aligns with the ${regionalStory.name} regional stack (${regionalStory.state}).`)
 
   return parts.join(' ')
 }
@@ -440,7 +458,7 @@ export default function GeoLayers() {
                 Read the ground.
               </h1>
               <p style={{ fontSize: '1.15rem', lineHeight: 1.8, maxWidth: 650, color: '#3B312F' }}>
-                GeoLayers now resolves real places with Nominatim, reads live geologic units from Macrostrat, and anchors the result on an OpenStreetMap view. When the point lands in one of the Utah demo regions, it also adds the deeper regional stack story.
+                GeoLayers resolves real places with Nominatim, reads live geologic units from Macrostrat, and anchors the result on an OpenStreetMap view — anywhere those sources have coverage. When the point lands in a curated region (Utah, Arizona, Colorado, New Mexico — more coming), it also adds the deeper illustrated stack story.
               </p>
             </div>
             <motion.div
@@ -487,29 +505,43 @@ export default function GeoLayers() {
 
       <section style={{ padding: '28px 0 0' }}>
         <div style={PAGE}>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            {PRESETS.map((preset) => (
-              <button
-                key={preset.id}
-                type="button"
-                onClick={() => {
-                  setQuery(preset.query)
-                  void runAnalysis(preset.query)
-                }}
-                style={{
-                  borderRadius: 999,
-                  border: '1px solid rgba(34,27,27,0.1)',
-                  padding: '10px 16px',
-                  background: COLORS.cream,
-                  color: COLORS.ink,
-                  fontFamily: 'var(--font-display)',
-                  cursor: 'pointer',
-                }}
-              >
-                {preset.name}
-              </button>
-            ))}
-          </div>
+          <p style={{ color: COLORS.stone, fontSize: '0.92rem', marginBottom: 16 }}>
+            Tap a curated region below, or type any place worldwide above for the live read.
+          </p>
+          {PRESET_STATES.map((st) => {
+            const chips = PRESETS.filter((preset) => preset.state === st)
+            if (chips.length === 0) return null
+            return (
+              <div key={st} style={{ marginBottom: 16 }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: COLORS.canyon, marginBottom: 8 }}>
+                  {st}
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  {chips.map((preset) => (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      onClick={() => {
+                        setQuery(preset.query)
+                        void runAnalysis(preset.query)
+                      }}
+                      style={{
+                        borderRadius: 999,
+                        border: '1px solid rgba(34,27,27,0.1)',
+                        padding: '10px 16px',
+                        background: COLORS.cream,
+                        color: COLORS.ink,
+                        fontFamily: 'var(--font-display)',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {preset.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </section>
 
@@ -620,7 +652,7 @@ export default function GeoLayers() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
                   <h2 style={{ fontSize: '1.55rem' }}>Regional stack story</h2>
                   <span style={{ color: result.regionalStory ? COLORS.canyon : COLORS.stone, fontSize: '0.88rem' }}>
-                    {result.regionalStory ? result.regionalStory.name : 'No Utah demo match'}
+                    {result.regionalStory ? `${result.regionalStory.name} · ${result.regionalStory.state}` : 'No curated region match'}
                   </span>
                 </div>
                 {result.regionalStory ? (
@@ -635,7 +667,7 @@ export default function GeoLayers() {
                   </>
                 ) : (
                   <p style={{ color: COLORS.stone, lineHeight: 1.8 }}>
-                    The live lookup works anywhere the sources support, but the deeper illustrated stack is still Utah-first. Outside those regions, GeoLayers currently gives you the live surface-unit read plus map context.
+                    The live lookup works anywhere the sources support. The deeper illustrated stack is currently curated for select Western US regions (Utah, Arizona, Colorado, New Mexico), expanding toward worldwide coverage. Outside those regions, GeoLayers gives you the live surface-unit read plus map context.
                   </p>
                 )}
               </div>
@@ -645,7 +677,7 @@ export default function GeoLayers() {
               <div style={noteCardStyle}>
                 <p style={noteTitleStyle}>What is live now</p>
                 <p style={noteBodyStyle}>
-                  Place resolution, map context, and geologic unit lookup are now fetched live. The Utah stack illustrations remain curated overlays for places that actually land in those demo regions.
+                  Place resolution, map context, and geologic unit lookup are fetched live for any location. The illustrated stack stories are curated overlays that appear for places landing in supported regions.
                 </p>
               </div>
               <div style={noteCardStyle}>
