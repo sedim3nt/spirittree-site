@@ -3,6 +3,8 @@ import { motion } from 'framer-motion'
 import { arizonaPresets } from './geolayers-presets/arizona'
 import { coloradoPresets } from './geolayers-presets/colorado'
 import { newMexicoPresets } from './geolayers-presets/new-mexico'
+import { nevadaPresets } from './geolayers-presets/nevada'
+import { californiaPresets } from './geolayers-presets/california'
 
 const COLORS = {
   canvas: '#F7F1E8',
@@ -97,9 +99,23 @@ const PRESETS = [
   ...arizonaPresets,
   ...coloradoPresets,
   ...newMexicoPresets,
+  ...nevadaPresets,
+  ...californiaPresets,
 ]
 
-const PRESET_STATES = ['Utah', 'Arizona', 'Colorado', 'New Mexico']
+const PRESET_STATES = ['Utah', 'Arizona', 'Colorado', 'New Mexico', 'Nevada', 'California']
+
+// Live-driven global highlights — no curated layer data; the auto-stack engine
+// pulls a real Macrostrat column for each on click, demonstrating worldwide reach.
+const WORLD_HIGHLIGHTS = [
+  { id: 'grand-canyon', name: 'Grand Canyon, AZ', query: 'Grand Canyon Village, AZ' },
+  { id: 'yellowstone', name: 'Yellowstone, WY', query: 'Yellowstone National Park, WY' },
+  { id: 'appalachians', name: 'Great Smoky Mtns, TN', query: 'Great Smoky Mountains National Park' },
+  { id: 'dolomites', name: 'Dolomites, Italy', query: 'Cortina d Ampezzo, Italy' },
+  { id: 'jurassic-coast', name: 'Jurassic Coast, UK', query: 'Lyme Regis, United Kingdom' },
+  { id: 'cliffs-moher', name: 'Cliffs of Moher, Ireland', query: 'Cliffs of Moher, Ireland' },
+  { id: 'banff', name: 'Banff, Canada', query: 'Banff, Alberta, Canada' },
+]
 
 function safeStorageRead() {
   try {
@@ -279,6 +295,58 @@ async function fetchGeology(lat, lng) {
   return geology
 }
 
+// Map one Macrostrat column unit into the LayerBar shape used by curated presets.
+function mapColumnUnit(unit) {
+  const lithNames = Array.isArray(unit.lith)
+    ? [...new Set(unit.lith.map((l) => l.name).filter(Boolean))]
+    : []
+  const name =
+    (unit.unit_name && unit.unit_name !== 'Unnamed' && unit.unit_name) ||
+    unit.Fm || unit.Gp || unit.strat_name_long || unit.t_int_name || 'Unnamed unit'
+  const age = unit.t_int_name && unit.b_int_name
+    ? (unit.t_int_name === unit.b_int_name ? unit.b_int_name : `${unit.b_int_name}-${unit.t_int_name}`)
+    : (Number.isFinite(unit.b_age) ? `${unit.b_age}-${unit.t_age} Ma` : 'Age unavailable')
+  const maxT = Number(unit.max_thick) || 0
+  const minT = Number(unit.min_thick) || 0
+  const thickness = maxT > 0
+    ? (minT > 0 && minT !== maxT ? `${minT}-${maxT} m` : `${maxT} m`)
+    : 'thickness not reported'
+  return {
+    name,
+    age,
+    material: lithNames.slice(0, 3).join(', ') || 'lithology n/a',
+    thickness,
+    note: unit.notes || (Array.isArray(unit.environ) && unit.environ[0]?.name) || '',
+    color: unit.color || '#B8A8A0',
+  }
+}
+
+// Auto-stack: a real stratigraphic column from Macrostrat for ANY point.
+// Dense across North America; sparse outside it (the surface read still works
+// worldwide). Returns { layers, total }; empty when no column covers the point.
+async function fetchColumn(lat, lng) {
+  const key = `${lat.toFixed(4)},${lng.toFixed(4)}`
+  const cached = readCachedValue('column', key)
+  if (cached) return cached
+
+  const url = new URL(`${MACROSTRAT_BASE}/units`)
+  url.searchParams.set('lat', String(lat))
+  url.searchParams.set('lng', String(lng))
+  url.searchParams.set('response', 'long')
+  url.searchParams.set('format', 'json')
+
+  let column = { layers: [], total: 0 }
+  try {
+    const raw = await fetchJson(url.toString())
+    const data = raw.success?.data || []
+    column = { layers: data.map(mapColumnUnit), total: data.length }
+  } catch {
+    column = { layers: [], total: 0 }
+  }
+  writeCachedValue('column', key, column)
+  return column
+}
+
 function buildRegionalStory(location, geology) {
   const preset = pickPreset(location.lat, location.lng)
   if (!preset) return null
@@ -401,11 +469,14 @@ export default function GeoLayers() {
       const location = await geocodeQuery(trimmed)
       const geology = await fetchGeology(location.lat, location.lng)
       const regionalStory = buildRegionalStory(location, geology)
+      // Auto-stack column only needed when there's no richer curated story.
+      const autoStack = regionalStory ? { layers: [], total: 0 } : await fetchColumn(location.lat, location.lng)
 
       setResult({
         location,
         geology,
         regionalStory,
+        autoStack,
         mapUrl: buildMapUrl(location),
         mapLink: buildMapLink(location),
         narrative: buildNarrative(location, geology, regionalStory),
@@ -458,7 +529,7 @@ export default function GeoLayers() {
                 Read the ground.
               </h1>
               <p style={{ fontSize: '1.15rem', lineHeight: 1.8, maxWidth: 650, color: '#3B312F' }}>
-                GeoLayers resolves real places with Nominatim, reads live geologic units from Macrostrat, and anchors the result on an OpenStreetMap view — anywhere those sources have coverage. When the point lands in a curated region (Utah, Arizona, Colorado, New Mexico — more coming), it also adds the deeper illustrated stack story.
+                Type any place on Earth. GeoLayers resolves it with Nominatim, reads live geologic units from Macrostrat, and maps it on OpenStreetMap. For any North American point it auto-builds a real stratigraphic column (youngest layer to oldest); for six Western states it adds a hand-curated, illustrated stack story. The live surface read works worldwide.
               </p>
             </div>
             <motion.div
@@ -542,6 +613,35 @@ export default function GeoLayers() {
               </div>
             )
           })}
+
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: COLORS.canyon, marginBottom: 8 }}>
+              Worldwide — live read (auto-stack where Macrostrat has column coverage)
+            </div>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              {WORLD_HIGHLIGHTS.map((spot) => (
+                <button
+                  key={spot.id}
+                  type="button"
+                  onClick={() => {
+                    setQuery(spot.query)
+                    void runAnalysis(spot.query)
+                  }}
+                  style={{
+                    borderRadius: 999,
+                    border: '1px solid rgba(34,27,27,0.1)',
+                    padding: '10px 16px',
+                    background: COLORS.cream,
+                    color: COLORS.ink,
+                    fontFamily: 'var(--font-display)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {spot.name}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -651,8 +751,12 @@ export default function GeoLayers() {
               <div style={panelStyle}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
                   <h2 style={{ fontSize: '1.55rem' }}>Regional stack story</h2>
-                  <span style={{ color: result.regionalStory ? COLORS.canyon : COLORS.stone, fontSize: '0.88rem' }}>
-                    {result.regionalStory ? `${result.regionalStory.name} · ${result.regionalStory.state}` : 'No curated region match'}
+                  <span style={{ color: (result.regionalStory || result.autoStack?.layers.length) ? COLORS.canyon : COLORS.stone, fontSize: '0.88rem' }}>
+                    {result.regionalStory
+                      ? `Curated · ${result.regionalStory.name} · ${result.regionalStory.state}`
+                      : result.autoStack?.layers.length
+                        ? 'Live Macrostrat column'
+                        : 'No column coverage here'}
                   </span>
                 </div>
                 {result.regionalStory ? (
@@ -665,9 +769,28 @@ export default function GeoLayers() {
                       ))}
                     </div>
                   </>
+                ) : result.autoStack?.layers.length ? (
+                  <>
+                    <p style={{ lineHeight: 1.8, marginBottom: 12 }}>
+                      Auto-built from the nearest Macrostrat stratigraphic column — the actual mapped units beneath this point, youngest at the top. No hand-curation; this works anywhere Macrostrat has column coverage (dense across North America).
+                    </p>
+                    <div style={{ marginTop: 8 }}>
+                      {result.autoStack.layers.slice(0, 9).map((layer, index) => (
+                        <LayerBar key={`${layer.name}-${index}`} layer={layer} index={index} total={Math.min(result.autoStack.layers.length, 9)} />
+                      ))}
+                    </div>
+                    {result.autoStack.total > 9 ? (
+                      <p style={{ color: COLORS.stone, fontSize: '0.9rem', marginTop: 12 }}>
+                        + {result.autoStack.total - 9} older units in the full Macrostrat column.
+                      </p>
+                    ) : null}
+                    <p style={{ color: COLORS.stone, fontSize: '0.85rem', marginTop: 10 }}>
+                      Column data: Macrostrat, CC-BY 4.0. Thicknesses in meters where reported.
+                    </p>
+                  </>
                 ) : (
                   <p style={{ color: COLORS.stone, lineHeight: 1.8 }}>
-                    The live lookup works anywhere the sources support. The deeper illustrated stack is currently curated for select Western US regions (Utah, Arizona, Colorado, New Mexico), expanding toward worldwide coverage. Outside those regions, GeoLayers gives you the live surface-unit read plus map context.
+                    No deeper stratigraphic column covers this exact point yet — Macrostrat's column data is densest across North America and still expanding globally. The live surface-unit read and map above work worldwide; curated illustrated stacks exist for Utah, Arizona, Colorado, New Mexico, Nevada, and California.
                   </p>
                 )}
               </div>
@@ -677,7 +800,7 @@ export default function GeoLayers() {
               <div style={noteCardStyle}>
                 <p style={noteTitleStyle}>What is live now</p>
                 <p style={noteBodyStyle}>
-                  Place resolution, map context, and geologic unit lookup are fetched live for any location. The illustrated stack stories are curated overlays that appear for places landing in supported regions.
+                  Place resolution, surface-unit lookup, and map context are fetched live for any location worldwide. North American points also get an auto-built Macrostrat column; six Western states add hand-curated illustrated stacks.
                 </p>
               </div>
               <div style={noteCardStyle}>
