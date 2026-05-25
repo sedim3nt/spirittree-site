@@ -43,7 +43,13 @@ npm run dev
 
 ## Environment Variables
 
-None required.
+```bash
+VITE_GEOLAYERS_NOMINATIM_BASE=https://nominatim.openstreetmap.org
+VITE_GEOLAYERS_MACROSTRAT_BASE=https://macrostrat.org/api
+VITE_GEOLAYERS_MAP_EMBED_BASE=https://www.openstreetmap.org/export/embed.html
+```
+
+All optional. `GeoLayers` uses public Nominatim and Macrostrat endpoints by default (no API key needed); the base URLs are configurable so the app can be pointed at a self-hosted or alternate service later without changing code.
 
 ## Part of SpiritTree
 

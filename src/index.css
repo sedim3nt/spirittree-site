@@ -189,6 +189,7 @@ h1, h2, h3, h4, h5, h6 {
   .kanban-grid { columns: 1 !important; }
   .hero-grid { grid-template-columns: 1fr !important; }
   .hero-stats { grid-template-columns: 1fr 1fr !important; }
+  .idea-hero-grid { grid-template-columns: 1fr !important; }
   .values-grid { grid-template-columns: 1fr !important; }
   .network-grid { grid-template-columns: 1fr !important; }
   .agent-bento { grid-template-columns: repeat(2, 1fr) !important; }
@@ -196,6 +197,10 @@ h1, h2, h3, h4, h5, h6 {
   .project-bento a { grid-column: span 1 !important; grid-row: span 1 !important; }
   .manifesto-bento { grid-template-columns: 1fr !important; }
   .manifesto-bento > div { grid-row: span 1 !important; }
+  .idea-grid { grid-template-columns: 1fr !important; }
+  .relationship-grid { grid-template-columns: 1fr !important; }
+  .stack-grid { grid-template-columns: 1fr !important; }
+  .layer-strip { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 768px) {
   .hamburger { display: flex; }

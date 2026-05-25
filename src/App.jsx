@@ -59,6 +59,8 @@ const PROJECTS = [
   { name: 'Displacement Index', desc: '56 occupations scored. AI Career Geographer for transitions.', url: 'https://displacementindex.spirittree.dev', badge: 'Public Good' },
   { name: 'CMPRSSN Diagnostic', desc: 'Assess your human-agent operations maturity. AI Compression Analyst.', url: 'https://diagnostic.spirittree.dev', badge: 'Tool' },
   { name: 'Enough Gauge', desc: 'Sufficiency widget. AI Philosopher reflects on enough.', url: 'https://enough.spirittree.dev', badge: 'Tool' },
+  { name: 'GeoLayers', desc: 'Utah-first geology reader. Turn a place into a layer story and readable stack.', url: '/geolayers', badge: 'Prototype', internal: true },
+  { name: 'Relational Layers', desc: 'Discern whether to deepen, hold, clarify, or step back in a relationship.', url: '/relational-layers', badge: 'Prototype', internal: true },
   { name: 'Spore', desc: 'Open source agent config library. 190 files. MIT licensed. Free forever.', url: 'https://github.com/sedim3nt/spore', badge: 'Open Source' },
   { name: 'Proof of Care', desc: 'On-chain attestations for care work. AI Witness on Base.', url: 'https://proofofcare.spirittree.dev', badge: 'Protocol' },
   { name: 'Agent Wallet', desc: 'Smart wallets for AI agents. Spending rules, fleet management.', url: 'https://agentwallet.spirittree.dev', badge: 'Infrastructure' },
@@ -304,7 +306,7 @@ function Projects() {
             What We&rsquo;ve Built
           </motion.h2>
           <motion.p variants={fade} style={{ fontFamily: 'var(--font-body)', color: 'var(--stone)', marginBottom: 48, fontSize: '1.1rem' }}>
-            19 live sites. Built by agents. Most of them free. 13 with integrated AI.
+            19 live sites, plus fresh field prototypes. Built by agents. Most of them free. Many aimed at the commons.
           </motion.p>
 
           <div style={{
@@ -317,8 +319,9 @@ function Projects() {
               const c = colors[i % colors.length]
               // Hero cards: index 0 and 4
               const isHero = i === 0 || i === 4
+              const isInternal = Boolean(p.internal)
               return (
-                <motion.a key={i} variants={fade} href={p.url} target="_blank" rel="noopener noreferrer"
+                <motion.a key={i} variants={fade} href={p.url} target={isInternal ? undefined : '_blank'} rel={isInternal ? undefined : 'noopener noreferrer'}
                   className="project-card"
                   style={{
                     background: isHero ? c : '#fff',
@@ -344,7 +347,9 @@ function Projects() {
                     <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: isHero ? '1.6rem' : '1.05rem', marginBottom: 8 }}>{p.name}</h3>
                     <p style={{ fontFamily: 'var(--font-body)', fontSize: isHero ? '1.05rem' : '0.88rem', lineHeight: 1.6, opacity: isHero ? 0.85 : 0.7 }}>{p.desc}</p>
                   </div>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.82rem', fontWeight: 600, color: isHero ? 'rgba(255,255,255,0.7)' : c, marginTop: 16 }}>Visit &#8594;</span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.82rem', fontWeight: 600, color: isHero ? 'rgba(255,255,255,0.7)' : c, marginTop: 16 }}>
+                    {isInternal ? 'Open prototype' : 'Visit'} &#8594;
+                  </span>
                 </motion.a>
               )
             })}
